@@ -1,0 +1,168 @@
+---
+title: "Through the Lens"
+toc: false
+---
+
+```{=html}
+<div class="lens-page">
+
+  <!-- Hero -->
+  <div class="lens-hero">
+    <img src="photo /DSC_3890.JPG" alt="Pastel sunset over the Pacific">
+    <div class="lens-hero-overlay">
+      <p class="lens-hero-text">Where light meets water,<br>I find my stillness.</p>
+    </div>
+  </div>
+
+  <!-- Intro -->
+  <div class="art-divider"><div class="art-divider-diamond"></div></div>
+
+  <div class="lens-intro">
+    <p>Photography is how I pause. Between data models and strategy decks, I chase golden hours along the California coast — drawn to the fleeting moments where light, water, and life converge. These are some of those moments.</p>
+  </div>
+
+  <!-- ── Golden Hour ── -->
+  <p class="lens-collection-label">Golden Hour</p>
+
+  <div class="lens-masonry">
+    <div class="lens-item lens-item--tall" onclick="openLightbox(this)">
+      <img src="photo /DSC_3047.JPG" alt="Golden sunset silhouette — person walking their dog at the water's edge">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Homeward</span>
+        <span class="lens-caption-text">A silhouette at the edge of the world — the kind of moment that makes you stop mid-step.</span>
+      </div>
+    </div>
+    <div class="lens-item" onclick="openLightbox(this)">
+      <img src="photo /DSC_3039.JPG" alt="Woman with dog among golden-lit rocks at sunset">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Still Warm</span>
+        <span class="lens-caption-text">Rocky shore, golden light, unhurried footsteps. The best company is the quiet kind.</span>
+      </div>
+    </div>
+    <div class="lens-item" onclick="openLightbox(this)">
+      <img src="photo /DSC_3077.JPG" alt="Abstract golden light refracting through ocean waves">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Liquid Gold</span>
+        <span class="lens-caption-text">Sunlight caught inside a wave — sometimes the most beautiful things last less than a second.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Ocean & Sky ── -->
+  <p class="lens-collection-label">Ocean &amp; Sky</p>
+
+  <div class="lens-masonry">
+    <div class="lens-item" onclick="openLightbox(this)">
+      <img src="photo /DSC_3890.JPG" alt="Pastel pink and blue sunset over gentle ocean waves">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Cotton Candy Skies</span>
+        <span class="lens-caption-text">That ten-minute window when the sky turns pastel and the ocean holds its breath.</span>
+      </div>
+    </div>
+    <div class="lens-item lens-item--tall" onclick="openLightbox(this)">
+      <img src="photo /DSC_3107.JPG" alt="Waves rolling in at dusk with a flock of birds gathered on the sand">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Evening Assembly</span>
+        <span class="lens-caption-text">Hundreds of birds lined up at the waterline, as if waiting for the last light to say goodnight.</span>
+      </div>
+    </div>
+    <div class="lens-item" onclick="openLightbox(this)">
+      <img src="photo /DSC_3475.JPG" alt="Huntington Beach pier at dusk with beachgoers in the foreground">
+      <div class="lens-caption">
+        <span class="lens-caption-title">The Pier</span>
+        <span class="lens-caption-text">Huntington Beach at dusk — where surfers, seagulls, and strangers share the same golden hour.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Wings & Waves ── -->
+  <p class="lens-collection-label">Wings &amp; Waves</p>
+
+  <div class="lens-masonry">
+    <div class="lens-item" onclick="openLightbox(this)">
+      <img src="photo /DSC_3471.JPG" alt="Seagull spreading its wings with another looking on">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Wingspan</span>
+        <span class="lens-caption-text">Caught mid-stretch — a small moment of wild grace at arm's length.</span>
+      </div>
+    </div>
+    <div class="lens-item lens-item--tall" onclick="openLightbox(this)">
+      <img src="photo /DSC_2949.JPG" alt="Person wading in surf alongside sandpipers near rocky coast">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Shared Shore</span>
+        <span class="lens-caption-text">We're all just visitors here — sandpipers, humans, and the tide.</span>
+      </div>
+    </div>
+    <div class="lens-item" onclick="openLightbox(this)">
+      <img src="photo /DSC_3623.JPG" alt="Two small shorebirds on a pale blue beach">
+      <div class="lens-caption">
+        <span class="lens-caption-title">Quiet Company</span>
+        <span class="lens-caption-text">Two little ones, knee-deep in morning light. The beach belongs to the early birds.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Closing -->
+  <div class="art-divider"><div class="art-divider-diamond"></div></div>
+
+  <div class="lens-closing">
+    <p>Every photograph is a small act of noticing — a reminder that beauty doesn't wait for us to be ready.</p>
+  </div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lens-lightbox" id="lensLightbox" onclick="closeLightbox(event)">
+  <button class="lens-lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <div class="lens-lightbox-content">
+    <img id="lightboxImg" src="" alt="">
+    <div class="lens-lightbox-caption">
+      <span class="lens-lightbox-title" id="lightboxTitle"></span>
+      <span class="lens-lightbox-text" id="lightboxText"></span>
+    </div>
+  </div>
+  <button class="lens-lightbox-prev" onclick="navigateLightbox(event, -1)">&#8249;</button>
+  <button class="lens-lightbox-next" onclick="navigateLightbox(event, 1)">&#8250;</button>
+</div>
+
+<script>
+  const allItems = document.querySelectorAll('.lens-item');
+  let currentIndex = 0;
+
+  function openLightbox(el) {
+    currentIndex = Array.from(allItems).indexOf(el);
+    showImage(currentIndex);
+    document.getElementById('lensLightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e.target.classList.contains('lens-lightbox') || e.target.classList.contains('lens-lightbox-close')) {
+      document.getElementById('lensLightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function navigateLightbox(e, dir) {
+    e.stopPropagation();
+    currentIndex = (currentIndex + dir + allItems.length) % allItems.length;
+    showImage(currentIndex);
+  }
+
+  function showImage(idx) {
+    const item = allItems[idx];
+    document.getElementById('lightboxImg').src = item.querySelector('img').src;
+    document.getElementById('lightboxImg').alt = item.querySelector('img').alt;
+    document.getElementById('lightboxTitle').textContent = item.querySelector('.lens-caption-title').textContent;
+    document.getElementById('lightboxText').textContent = item.querySelector('.lens-caption-text').textContent;
+  }
+
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lensLightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') { lb.classList.remove('active'); document.body.style.overflow = ''; }
+    if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % allItems.length; showImage(currentIndex); }
+    if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + allItems.length) % allItems.length; showImage(currentIndex); }
+  });
+</script>
+```

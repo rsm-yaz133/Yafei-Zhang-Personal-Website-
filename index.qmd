@@ -21,12 +21,10 @@ As a data-driven business and marketing strategist with experience in business d
 <div class="gallery-section">
   <p class="gallery-title">Through the Lens</p>
   <div class="photo-gallery">
-    <img src="photo /DSC_3890.JPG" alt="Pastel sunset over the ocean">
     <img src="photo /DSC_3047.JPG" alt="Golden sunset silhouette">
-    <img src="photo /DSC_3039.JPG" alt="Warm evening walk on the beach">
-    <img src="photo /DSC_3471.JPG" alt="Seagulls in flight">
-    <img src="photo /DSC_3623.JPG" alt="Birds at the shoreline">
-    <img src="photo /DSC_3475.JPG" alt="Huntington Beach pier at dusk">
+    <img src="photo /DSC_3471.JPG" alt="Seagull spreading its wings">
+    <img src="photo /DSC_3890.JPG" alt="Pastel sunset over the ocean">
   </div>
+  <a href="lens.html" class="gallery-view-all">View Full Gallery &rarr;</a>
 </div>
 ```

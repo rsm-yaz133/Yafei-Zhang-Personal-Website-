@@ -132,16 +132,17 @@ format:
     </div>
   </div>
 
-  <!-- ═══ Closing ═══ -->
-  <div class="art-closing">
-    <div class="art-divider">
-      <span class="art-divider-diamond"></span>
+  <!-- ═══ Closing — Pullquote ═══ -->
+  <div class="art-pullquote">
+    <div class="art-pullquote-inner">
+      <span class="art-pullquote-mark">&ldquo;</span>
+      <p class="art-pullquote-text">This work shaped how I see data today — not as numbers on a screen, but as <em>stories waiting for the right frame.</em></p>
+      <p class="art-pullquote-text art-pullquote-second">
+        Heritage taught me that context is everything.<br>
+        <strong>Analytics lets me prove it.</strong>
+      </p>
+      <div class="art-pullquote-line"></div>
     </div>
-    <p class="art-closing-text">
-      This work shaped how I see data today — not as numbers on a screen,
-      but as stories waiting for the right frame.<br>
-      Heritage taught me that context is everything. Analytics lets me prove it.
-    </p>
   </div>
 
 </div>
