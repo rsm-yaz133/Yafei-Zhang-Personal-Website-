@@ -1,0 +1,166 @@
+---
+title: "Resume"
+description: "Resume of Yafei (Judie) Zhang — Experience in data analytics, marketing strategy, and business intelligence."
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    resources:
+      - files/resume.pdf
+---
+
+```{=html}
+<div class="resume-container">
+
+  <!-- Header -->
+  <div class="resume-header">
+    <h1 class="resume-name">Yafei Zhang</h1>
+    <div class="resume-contact">
+      San Diego, CA &nbsp;|&nbsp; (445) 800-6477 &nbsp;|&nbsp;
+      <a href="mailto:yaz133@ucsd.edu">yaz133@ucsd.edu</a> &nbsp;|&nbsp;
+      <a href="https://www.linkedin.com/in/yafei-zhang-judie/" target="_blank">LinkedIn</a>
+    </div>
+    <a href="files/resume.pdf" class="resume-download" download>Download PDF</a>
+  </div>
+
+  <!-- Experience -->
+  <h2 class="resume-section-title">Experience</h2>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Score Framework & Customer Experience Analytics</span>
+        <span class="resume-company">&mdash; Thermo Fisher Scientific Client</span>
+      </div>
+      <span class="resume-date">Spring 2026 | In Progress</span>
+    </div>
+    <ul>
+      <li>Evaluating CX Score KPIs and weighting model performance, sensitivity, and relevance using descriptive, predictive, and prescriptive analytics to discover key drivers of customer experience outcomes and early change signals.</li>
+      <li>Simulation and comparison of scoring and weighting schemes, resulting in data-driven recommendations and a CX framework for improved stakeholder trust, interpretability, and proactive customer experience management.</li>
+    </ul>
+  </div>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Data Marketing Analyst</span>
+        <span class="resume-company">&mdash; Levra Labs</span>
+        <span class="resume-type">(Part-Time)</span>
+      </div>
+      <span class="resume-date">Feb 2026 &ndash; Present</span>
+    </div>
+    <ul>
+      <li>Built an investor metrics workbook tracking MRR, ARR, LTV:CAC ratio, gross margin, and churn across 10 linked sheets &mdash; used by the CEO in every investor meeting.</li>
+      <li>Researched and profiled 15+ partnership targets across three tiers, scoring each on revenue fit, team size, and strategic alignment to prioritize outreach.</li>
+      <li>Created a competitive tracker comparing client company against two funded competitors ($78M and $62M raised), with gap analysis and investor rebuttal scripts.</li>
+      <li>Developed a 5-year financial model projecting revenue across three streams (subscription, transaction, commission) with auto-updating growth assumptions.</li>
+    </ul>
+  </div>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Data & Strategy Analyst</span>
+        <span class="resume-company">&mdash; Hawaii DBET</span>
+        <span class="resume-type">(Part-Time)</span>
+      </div>
+      <span class="resume-date">May 2024 &ndash; Jul 2025</span>
+    </div>
+    <ul>
+      <li>Designed an automated, reproducible Python pipeline that analyzed 9 years of USDA Kona Coffee data (2015&ndash;2024) spanning production, yield, and pricing &mdash; replacing manual reporting, cut turnaround by 40%.</li>
+      <li>Enabled stakeholders to stress-test seasonality, service level, and price sensitivity for export decision making.</li>
+      <li>Identified the structural ceiling on coffee supply &mdash; 7,000 acres, yield variance of 3,150&ndash;4,180 lbs/acre, and a 62% price run-up ($1.55&rarr;$2.51/lb) over 9 seasons &mdash; for risk framework strategy making.</li>
+      <li>Segmented Chinese B2B urban buyers and pressure-tested the margin resilience under disruptions, which shaped the premium positioning of export strategy's customer targeting.</li>
+    </ul>
+  </div>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Marketing and Content Strategist</span>
+        <span class="resume-company">&mdash; MirrorAI</span>
+        <span class="resume-type">(Part-Time)</span>
+      </div>
+      <span class="resume-date">Nov 2024 &ndash; Jul 2025</span>
+    </div>
+    <ul>
+      <li>Noticed friction in the report delivery flow and ran an A/B test that revealed 70% of customers preferred partial previews over a 3-minute wait &mdash; findings that drove a UX redesign and measurably improved user satisfaction.</li>
+      <li>Spotted patterns in customer behavior data and partnered with Engineering and Product to weave those insights into the LLM development cycle, contributing to a 30% lift in customer retention.</li>
+    </ul>
+  </div>
+
+  <!-- Project -->
+  <h2 class="resume-section-title">Project</h2>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Global Wine Market Investment & Sourcing Strategy</span>
+        <span class="resume-company">&mdash; Python (Polars), Tableau</span>
+      </div>
+      <span class="resume-date">2025</span>
+    </div>
+    <ul>
+      <li>Consolidated 130K+ Kaggle wine evaluations, World Bank GDP, and worldwide trade production data into a clean analytical foundation utilizing Polars pipeline, regex vintage parsing, and manual country-name reconciliation.</li>
+      <li>Developed a scoring model balancing quality ratings (60%) and production volume stability (40%) to distinguish premium-anchor markets (Italy, France, Spain) from high-volume growth plays (US, Australia, China).</li>
+    </ul>
+  </div>
+
+  <!-- Skills -->
+  <h2 class="resume-section-title">Specialized Skills</h2>
+
+  <div class="resume-skills">
+    <div class="resume-skill-group">
+      <span class="resume-skill-label">Business Intelligence & Analytics:</span>
+      Agentic AI, Customer Segmentation, Customer Behavior Analysis, Funnel & Conversion Analysis, Operational Metrics Analysis, A/B Testing, Pricing & Sensitivity Analysis, Predictive Analytics
+    </div>
+    <div class="resume-skill-group">
+      <span class="resume-skill-label">Customer & Operations Analysis:</span>
+      KPI Design & Performance Tracking, Customer Lifecycle Analysis, Revenue & Profitability Analysis, Pipeline Performance Tracking, Process Optimization, Competitive Market Analysis
+    </div>
+    <div class="resume-skill-group">
+      <span class="resume-skill-label">Communication:</span>
+      Technical-to-Business Communication, Cross-Functional Communication, Slide Deck Development
+    </div>
+    <div class="resume-skill-group">
+      <span class="resume-skill-label">Data & BI Tools:</span>
+      SQL, Python, Tableau, Power BI, Excel (Advanced), Snowflake, Rhino3D, AI Assisted Workflow
+    </div>
+  </div>
+
+  <!-- Education -->
+  <h2 class="resume-section-title">Education</h2>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Master of Science in Business Analytics</span>
+        <span class="resume-company">&mdash; Rady School of Management, UC San Diego</span>
+      </div>
+      <span class="resume-date">Dec 2026</span>
+    </div>
+    <p class="resume-edu-detail"><em>Focus: Customer & Market Analytics, AI for Business, Applied Machine Learning | Coursework in uplift modeling and churn analysis</em></p>
+  </div>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Master of Arts in Media, Heritage, and Integrated Product Design</span>
+        <span class="resume-company">&mdash; University of Pennsylvania</span>
+      </div>
+      <span class="resume-date">May 2025</span>
+    </div>
+  </div>
+
+  <div class="resume-entry">
+    <div class="resume-entry-header">
+      <div>
+        <span class="resume-role">Bachelor of Arts in Communication</span>
+        <span class="resume-company">&mdash; University of Colorado Denver</span>
+      </div>
+      <span class="resume-date">May 2023</span>
+    </div>
+  </div>
+
+</div>
+```

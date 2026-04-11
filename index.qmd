@@ -1,0 +1,32 @@
+---
+title: "Yafei Zhang"
+description: "Yafei (Judie) Zhang — Data-driven business and marketing strategist specializing in customer analytics, predictive modeling, and marketing strategy."
+image: "IMG_8940.jpg"
+open-graph:
+  image: "IMG_8940.jpg"
+about:
+  template: jolla
+  links:
+    - icon: envelope
+      text: yaz133@ucsd.edu
+      href: mailto:yaz133@ucsd.edu
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/yafei-zhang-judie/
+---
+
+As a data-driven business and marketing strategist with experience in business development and public relations, I am passionate about transforming data insights into impactful stories that boost companies' revenue and enhance brand visibility. I am eager to use analytics skills like Python, SQL, and machine learning models to improve customer interactions, streamline operational processes, and optimize decision-making.
+
+```{=html}
+<div class="gallery-section">
+  <p class="gallery-title">Through the Lens</p>
+  <div class="photo-gallery">
+    <img src="photo /DSC_3890.JPG" alt="Pastel sunset over the ocean">
+    <img src="photo /DSC_3047.JPG" alt="Golden sunset silhouette">
+    <img src="photo /DSC_3039.JPG" alt="Warm evening walk on the beach">
+    <img src="photo /DSC_3471.JPG" alt="Seagulls in flight">
+    <img src="photo /DSC_3623.JPG" alt="Birds at the shoreline">
+    <img src="photo /DSC_3475.JPG" alt="Huntington Beach pier at dusk">
+  </div>
+</div>
+```

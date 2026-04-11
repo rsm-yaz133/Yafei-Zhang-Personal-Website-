@@ -1,0 +1,1034 @@
+/* ─── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+/* ─── Base ──────────────────────────────────────────────────── */
+body {
+  font-family: 'Jost', sans-serif;
+  background-color: #faf8f5;
+  color: #3a3a3a;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  color: #3a3a3a;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Navbar ────────────────────────────────────────────────── */
+.navbar {
+  background-color: rgba(250, 248, 245, 0.96) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e8ddd5;
+  padding: 0.9rem 2rem;
+}
+
+.navbar-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  color: #3a3a3a !important;
+}
+
+.navbar .nav-link {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a8a8a !important;
+  transition: color 0.3s ease;
+  padding: 0.4rem 1rem !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #c4849a !important;
+}
+
+/* ─── About / Landing ───────────────────────────────────────── */
+.quarto-about-jolla {
+  padding: 3rem 1rem;
+}
+
+.quarto-about-jolla .about-image {
+  border-radius: 50%;
+  border: 4px solid #f0e2e6;
+  box-shadow: 0 8px 36px rgba(196, 132, 154, 0.18);
+}
+
+.quarto-about-jolla h1 {
+  font-size: 2.4rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+.quarto-about-jolla p {
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: #5a5a5a;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Social link buttons */
+.quarto-about-jolla .about-links .btn {
+  border: 1px solid #e0cfcf;
+  color: #c4849a;
+  background: transparent;
+  border-radius: 50px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.85rem;
+  font-family: 'Jost', sans-serif;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  margin: 0.3rem;
+}
+
+.quarto-about-jolla .about-links .btn:hover {
+  background-color: #c4849a;
+  border-color: #c4849a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(196, 132, 154, 0.3);
+}
+
+/* ─── Photo Gallery ─────────────────────────────────────────── */
+.gallery-section {
+  margin: 3.5rem 0 2rem;
+  text-align: center;
+}
+
+.gallery-section .gallery-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9a9a9a;
+  margin-bottom: 0.6rem;
+}
+
+.gallery-section .gallery-title::after {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: #c4849a;
+  margin: 0.75rem auto 0;
+}
+
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 1.8rem;
+}
+
+.photo-gallery img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+.photo-gallery img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
+}
+
+/* ─── Connect Page ──────────────────────────────────────────── */
+.connect-portrait {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0.5rem auto 1.8rem;
+  border: 3px solid #f0e2e6;
+  box-shadow: 0 6px 28px rgba(196, 132, 154, 0.22);
+}
+
+.connect-intro {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: #8a8a8a;
+  max-width: 540px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.85;
+}
+
+.cal-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.07);
+  margin-top: 1rem;
+  background: white;
+}
+
+/* ─── Project Listing Cards ─────────────────────────────────── */
+.quarto-listing-default .list-item {
+  border: none !important;
+  border-radius: 14px;
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  background: white;
+  overflow: hidden;
+  margin-bottom: 1.2rem;
+}
+
+.quarto-listing-default .list-item:hover {
+  box-shadow: 0 10px 36px rgba(196, 132, 154, 0.18);
+  transform: translateY(-4px);
+}
+
+.quarto-listing-default .list-item .listing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+}
+
+/* ─── Category Tags ─────────────────────────────────────────── */
+.quarto-category {
+  background-color: #f5e6eb !important;
+  color: #b0607a !important;
+  border: none !important;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  border-radius: 50px !important;
+  padding: 0.25rem 0.75rem !important;
+}
+
+/* ─── Links ─────────────────────────────────────────────────── */
+a {
+  color: #c4849a;
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: #a66880;
+  text-decoration: none;
+}
+
+/* ─── Dividers ──────────────────────────────────────────────── */
+hr {
+  border-color: #ece4df;
+  margin: 2rem 0;
+}
+
+/* ─── Page title ────────────────────────────────────────────── */
+.quarto-title h1.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* ─── TOC ───────────────────────────────────────────────────── */
+#TOC .nav-link {
+  font-size: 0.82rem;
+  color: #9a9a9a;
+  font-family: 'Jost', sans-serif;
+}
+
+#TOC .nav-link:hover,
+#TOC .nav-link.active {
+  color: #c4849a;
+}
+
+/* ─── Project Pages — Larger Text ───────────────────────────── */
+.quarto-title + .quarto-categories + section,
+main#quarto-document-content > section p,
+main#quarto-document-content > section li {
+  font-size: 1.12rem;
+  line-height: 1.95;
+}
+
+main#quarto-document-content > section h2 {
+  font-size: 1.65rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.8rem;
+  color: #5a4a50;
+}
+
+/* ─── Project Images ────────────────────────────────────────── */
+main#quarto-document-content figure img,
+main#quarto-document-content > section img {
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  margin: 1.5rem 0;
+  transition: box-shadow 0.4s ease;
+}
+
+main#quarto-document-content figure img:hover,
+main#quarto-document-content > section img:hover {
+  box-shadow: 0 8px 36px rgba(196, 132, 154, 0.22);
+}
+
+/* ─── Tables ────────────────────────────────────────────────── */
+main#quarto-document-content table {
+  font-size: 1.02rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.04);
+}
+
+main#quarto-document-content table thead {
+  background-color: #f5e6eb;
+  color: #5a4a50;
+}
+
+main#quarto-document-content table th {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 0.7rem 1rem;
+}
+
+main#quarto-document-content table td {
+  padding: 0.6rem 1rem;
+}
+
+main#quarto-document-content table tbody tr:hover {
+  background-color: #fdf5f7;
+}
+
+/* ─── Connect Page Links ───────────────────────────────────── */
+.connect-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.connect-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #e0cfcf;
+  color: #c4849a;
+  background: transparent;
+  border-radius: 50px;
+  padding: 0.55rem 1.4rem;
+  font-size: 0.88rem;
+  font-family: 'Jost', sans-serif;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.connect-btn:hover {
+  background-color: #c4849a;
+  border-color: #c4849a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(196, 132, 154, 0.3);
+  text-decoration: none;
+}
+
+/* ─── Resume Page ──────────────────────────────────────────── */
+.resume-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.resume-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #ece4df;
+}
+
+.resume-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: #3a3a3a;
+  margin-bottom: 0.5rem;
+}
+
+.resume-contact {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  color: #8a8a8a;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+
+.resume-contact a {
+  color: #c4849a;
+  text-decoration: none;
+}
+
+.resume-contact a:hover {
+  color: #a66880;
+}
+
+.resume-download {
+  display: inline-block;
+  border: 1px solid #e0cfcf;
+  color: #c4849a;
+  background: transparent;
+  border-radius: 50px;
+  padding: 0.4rem 1.4rem;
+  font-size: 0.82rem;
+  font-family: 'Jost', sans-serif;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.resume-download:hover {
+  background-color: #c4849a;
+  border-color: #c4849a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(196, 132, 154, 0.3);
+  text-decoration: none;
+}
+
+.resume-section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5a4a50;
+  border-bottom: 1px solid #ece4df;
+  padding-bottom: 0.4rem;
+  margin-top: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.resume-entry {
+  margin-bottom: 1.5rem;
+}
+
+.resume-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.resume-role {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #3a3a3a;
+}
+
+.resume-company {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+.resume-type {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: #9a9a9a;
+}
+
+.resume-date {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: #c4849a;
+  white-space: nowrap;
+}
+
+.resume-entry ul {
+  margin-top: 0.4rem;
+  padding-left: 1.3rem;
+  list-style: none;
+}
+
+.resume-entry ul li {
+  position: relative;
+  padding-left: 0.8rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #5a5a5a;
+}
+
+.resume-entry ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #c4849a;
+}
+
+.resume-edu-detail {
+  font-size: 0.88rem;
+  color: #8a8a8a;
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+}
+
+.resume-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.resume-skill-group {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #5a5a5a;
+}
+
+.resume-skill-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  color: #3a3a3a;
+}
+
+/* ─── Resume Responsive ────────────────────────────────────── */
+@media (max-width: 600px) {
+  .resume-entry-header {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .resume-name {
+    font-size: 2rem;
+  }
+}
+
+/* ─── Art & Heritage Page ──────────────────────────────────── */
+.art-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 0 3rem;
+}
+
+/* ── Hero image with overlay text ─── */
+.art-hero-image {
+  position: relative;
+  overflow: hidden;
+  margin: -1rem -1rem 0;
+  aspect-ratio: 14 / 9;
+  max-height: 560px;
+}
+
+.art-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.95) contrast(1.02) saturate(1.05);
+  transition: transform 8s ease, filter 2s ease;
+}
+
+.art-hero-image:hover img {
+  transform: scale(1.03);
+  filter: brightness(1.0) contrast(1.02) saturate(1.05);
+}
+
+.art-hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 3rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(40, 30, 35, 0) 40%,
+    rgba(40, 30, 35, 0.45) 100%
+  );
+}
+
+.art-hero-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: center;
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+/* ── Decorative divider ─── */
+.art-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2.5rem auto;
+  max-width: 200px;
+}
+
+.art-divider::before,
+.art-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d4b5be, transparent);
+}
+
+.art-divider-diamond {
+  width: 6px;
+  height: 6px;
+  background: #c4849a;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ── Opening statement ─── */
+.art-statement {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+.art-statement p {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 1.04rem;
+  line-height: 2;
+  color: #5a5a5a;
+}
+
+/* ── Section labels ─── */
+.art-section-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #b0909a;
+  margin-bottom: 1.5rem;
+}
+
+.art-section-label::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: #c4849a;
+  margin: 0.8rem auto 0;
+}
+
+/* ── Split section: portrait + text ─── */
+.art-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  padding: 3rem 1rem;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.art-split-image {
+  text-align: center;
+}
+
+.art-frame {
+  border: 1px solid #e0d3d7;
+  padding: 8px;
+  background: #faf8f5;
+  box-shadow: 0 6px 36px rgba(150, 100, 120, 0.1);
+  display: inline-block;
+  transition: box-shadow 0.5s ease;
+}
+
+.art-frame:hover {
+  box-shadow: 0 12px 48px rgba(150, 100, 120, 0.18);
+}
+
+.art-frame img {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  display: block;
+  filter: contrast(1.02) saturate(0.95);
+}
+
+.art-caption {
+  display: block;
+  margin-top: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #a09098;
+  letter-spacing: 0.02em;
+}
+
+.art-split-text {
+  padding: 0.5rem 0;
+}
+
+.art-split-text .art-section-label {
+  text-align: left;
+}
+
+.art-split-text .art-section-label::after {
+  margin: 0.8rem 0 0;
+}
+
+.art-split-text p {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.98rem;
+  line-height: 1.9;
+  color: #5a5a5a;
+  margin-bottom: 1rem;
+}
+
+/* ── Reading desk section ─── */
+.art-reading {
+  padding: 3rem 1rem;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.art-reading-content {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.art-reading-intro {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #6a6a6a;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.art-reading-image {
+  text-align: center;
+}
+
+.art-frame-wide {
+  border: 1px solid #e0d3d7;
+  padding: 8px;
+  background: #faf8f5;
+  box-shadow: 0 8px 44px rgba(150, 100, 120, 0.1);
+  display: inline-block;
+  max-width: 100%;
+  transition: box-shadow 0.5s ease;
+}
+
+.art-frame-wide:hover {
+  box-shadow: 0 14px 56px rgba(150, 100, 120, 0.17);
+}
+
+.art-frame-wide img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  filter: contrast(1.02) brightness(1.02);
+}
+
+.art-book-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+.art-tag {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #9a7a84;
+  border: 1px solid #e4d4da;
+  padding: 0.35rem 0.9rem;
+  background: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.art-tag:hover {
+  background: #c4849a;
+  color: white;
+  border-color: #c4849a;
+}
+
+/* ── Pillars with numbers ─── */
+.art-pillars {
+  text-align: center;
+  margin: 1rem 0 3rem;
+  padding: 0 1rem;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.art-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.art-pillar {
+  padding: 2rem 1.4rem;
+  border: 1px solid #ece0e4;
+  background: white;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.art-pillar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #c4849a, transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.art-pillar:hover {
+  box-shadow: 0 10px 40px rgba(196, 132, 154, 0.12);
+  transform: translateY(-4px);
+}
+
+.art-pillar:hover::before {
+  opacity: 1;
+}
+
+.art-pillar-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: #e8d4da;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+  line-height: 1;
+}
+
+.art-pillar h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #4a4a4a;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.8rem;
+}
+
+.art-pillar p {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: #7a7a7a;
+  margin: 0;
+}
+
+/* ── Featured project card ─── */
+.art-featured {
+  margin: 2rem 1rem 3.5rem;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.art-featured-frame {
+  border: 1px solid #e0d3d7;
+  border-radius: 0;
+  padding: 6px;
+  background: #faf8f5;
+  box-shadow: 0 8px 44px rgba(150, 100, 120, 0.08);
+}
+
+.art-featured-inner {
+  border: 1px solid #ece0e4;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  background: linear-gradient(
+    175deg,
+    #fffbfa 0%,
+    #faf8f5 40%,
+    #f8f2f0 100%
+  );
+}
+
+.art-featured-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c4849a;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.art-featured-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: #3a3a3a;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.2rem;
+}
+
+.art-featured-desc {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.98rem;
+  line-height: 1.85;
+  color: #6a6a6a;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.art-featured-details {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid #ece0e4;
+  border-bottom: 1px solid #ece0e4;
+}
+
+.art-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.art-detail-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #b0909a;
+}
+
+.art-detail-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #4a4a4a;
+}
+
+.art-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #c4849a;
+  color: #c4849a;
+  background: transparent;
+  border-radius: 0;
+  padding: 0.75rem 2.2rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+
+.art-view-btn:hover {
+  background: #c4849a;
+  color: white;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(196, 132, 154, 0.3);
+}
+
+/* ── Closing ─── */
+.art-closing {
+  text-align: center;
+  padding: 1rem 1rem 0;
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+.art-closing-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: #8a7a7f;
+  line-height: 2.1;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── Art page responsive ─── */
+@media (max-width: 700px) {
+  .art-hero-image {
+    aspect-ratio: 4 / 3;
+    margin: -1rem -0.5rem 0;
+  }
+  .art-hero-text {
+    font-size: 1.3rem;
+    padding: 0 1rem;
+  }
+  .art-split {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  .art-split-text .art-section-label {
+    text-align: center;
+  }
+  .art-split-text .art-section-label::after {
+    margin: 0.8rem auto 0;
+  }
+  .art-pillar-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .art-featured-inner {
+    padding: 2rem 1.5rem;
+  }
+  .art-featured-details {
+    gap: 1.5rem;
+  }
+  .art-featured-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* ─── Inline Code / Skill Tags ──────────────────────────────── */
+main#quarto-document-content code {
+  background-color: #f5e6eb;
+  color: #b0607a;
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.88rem;
+}

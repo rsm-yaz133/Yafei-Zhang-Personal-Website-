@@ -1,0 +1,50 @@
+---
+title: "S-Mobile: Proactive Churn Management"
+description: "Built a predictive churn model for a Singapore telecom with 1 million subscribers, designed targeted retention interventions, and evaluated profitability using a 60-month CLV framework."
+date: 2024-12-01
+categories: [Machine Learning, CLV Analysis, Marketing Analytics]
+---
+
+## Overview
+
+S-Mobile faced a **2% monthly churn rate** across 1 million subscribers — each percentage point representing millions in recurring revenue at risk. This project aimed to identify at-risk customers proactively and design cost-effective retention programs.
+
+## Modeling
+
+- Built a **weighted Logistic Regression** and **Random Forest** on a 27,300-customer training sample
+- Applied **50% oversampling** with case weights (1:49) to calibrate predictions back to the real-world 2% churn rate
+- Achieved an **AUC of 0.688** on the held-out test set
+
+## Key Insights
+
+Used **Permutation Importance** and **Partial Dependence Plots** to identify the top actionable churn drivers:
+
+| Driver | Impact |
+|---|---|
+| Equipment age (`eqpdays`) | Customers with older devices churn significantly more |
+| Overage minutes | High overage predicts dissatisfaction and churn |
+| Refurbished handsets | Customers with refurbished devices have elevated churn risk |
+
+Together, these three variables affect customers representing **over 30% of the subscriber base**.
+
+## Retention Interventions
+
+Designed **5 targeted retention actions** using counterfactual simulation — modifying each variable in the model to predict what churn would look like if the action were taken:
+
+1. Equipment upgrade program
+2. Plan optimization for overage customers
+3. Device replacement for refurbished handset holders
+4. New customer loyalty incentives
+5. Proactive outreach for high-risk segments
+
+## Economics
+
+Evaluated **3 interventions** using a **60-month CLV framework** across 1M subscribers:
+
+- 40% margin, 7.44% annual discount rate
+- Quantified both the **indifference point** and **proposed intervention cost** for each program
+- Determined net profitability to prioritize the highest-ROI retention actions
+
+## Skills Used
+
+`Random Forest` · `Logistic Regression` · `CLV Analysis` · `Python` · `Partial Dependence Plots` · `Counterfactual Simulation`

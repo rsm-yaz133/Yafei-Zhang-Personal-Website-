@@ -1,0 +1,34 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Yafei (Judie) Zhang"
+  favicon: favicon.svg
+  site-url: https://rsm-yaz133.github.io/personal-website
+  description: "Yafei (Judie) Zhang — Data-driven business and marketing strategist. MSBA candidate at UC San Diego specializing in customer analytics, predictive modeling, and marketing strategy."
+  open-graph:
+    locale: en_US
+    site-name: "Yafei (Judie) Zhang"
+  twitter-card:
+    card-style: summary_large_image
+  google-analytics: "G-XXXXXXXXXX"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Hi
+      - href: cv.qmd
+        text: Resume
+      - href: projects.qmd
+        text: Projects
+      - href: art.qmd
+        text: Art & Heritage
+      - href: connect.qmd
+        text: Connect
+
+format:
+  html:
+    theme:
+      - cosmo
+    css: styles.css
+    toc: true

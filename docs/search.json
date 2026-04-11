@@ -1,0 +1,163 @@
+[
+  {
+    "objectID": "cv.html",
+    "href": "cv.html",
+    "title": "Resume",
+    "section": "",
+    "text": "Yafei Zhang\n    \n      San Diego, CA  |  (445) 800-6477  | \n      yaz133@ucsd.edu  | \n      LinkedIn\n    \n    Download PDF\n  \n\n  \n  Experience\n\n  \n    \n      \n        Score Framework & Customer Experience Analytics\n        — Thermo Fisher Scientific Client\n      \n      Spring 2026 | In Progress\n    \n    \n      Evaluating CX Score KPIs and weighting model performance, sensitivity, and relevance using descriptive, predictive, and prescriptive analytics to discover key drivers of customer experience outcomes and early change signals.\n      Simulation and comparison of scoring and weighting schemes, resulting in data-driven recommendations and a CX framework for improved stakeholder trust, interpretability, and proactive customer experience management.\n    \n  \n\n  \n    \n      \n        Data Marketing Analyst\n        — Levra Labs\n        (Part-Time)\n      \n      Feb 2026 – Present\n    \n    \n      Built an investor metrics workbook tracking MRR, ARR, LTV:CAC ratio, gross margin, and churn across 10 linked sheets — used by the CEO in every investor meeting.\n      Researched and profiled 15+ partnership targets across three tiers, scoring each on revenue fit, team size, and strategic alignment to prioritize outreach.\n      Created a competitive tracker comparing client company against two funded competitors ($78M and $62M raised), with gap analysis and investor rebuttal scripts.\n      Developed a 5-year financial model projecting revenue across three streams (subscription, transaction, commission) with auto-updating growth assumptions.\n    \n  \n\n  \n    \n      \n        Data & Strategy Analyst\n        — Hawaii DBET\n        (Part-Time)\n      \n      May 2024 – Jul 2025\n    \n    \n      Designed an automated, reproducible Python pipeline that analyzed 9 years of USDA Kona Coffee data (2015–2024) spanning production, yield, and pricing — replacing manual reporting, cut turnaround by 40%.\n      Enabled stakeholders to stress-test seasonality, service level, and price sensitivity for export decision making.\n      Identified the structural ceiling on coffee supply — 7,000 acres, yield variance of 3,150–4,180 lbs/acre, and a 62% price run-up ($1.55→$2.51/lb) over 9 seasons — for risk framework strategy making.\n      Segmented Chinese B2B urban buyers and pressure-tested the margin resilience under disruptions, which shaped the premium positioning of export strategy's customer targeting.\n    \n  \n\n  \n    \n      \n        Marketing and Content Strategist\n        — MirrorAI\n        (Part-Time)\n      \n      Nov 2024 – Jul 2025\n    \n    \n      Noticed friction in the report delivery flow and ran an A/B test that revealed 70% of customers preferred partial previews over a 3-minute wait — findings that drove a UX redesign and measurably improved user satisfaction.\n      Spotted patterns in customer behavior data and partnered with Engineering and Product to weave those insights into the LLM development cycle, contributing to a 30% lift in customer retention.\n    \n  \n\n  \n  Project\n\n  \n    \n      \n        Global Wine Market Investment & Sourcing Strategy\n        — Python (Polars), Tableau\n      \n      2025\n    \n    \n      Consolidated 130K+ Kaggle wine evaluations, World Bank GDP, and worldwide trade production data into a clean analytical foundation utilizing Polars pipeline, regex vintage parsing, and manual country-name reconciliation.\n      Developed a scoring model balancing quality ratings (60%) and production volume stability (40%) to distinguish premium-anchor markets (Italy, France, Spain) from high-volume growth plays (US, Australia, China).\n    \n  \n\n  \n  Specialized Skills\n\n  \n    \n      Business Intelligence & Analytics:\n      Agentic AI, Customer Segmentation, Customer Behavior Analysis, Funnel & Conversion Analysis, Operational Metrics Analysis, A/B Testing, Pricing & Sensitivity Analysis, Predictive Analytics\n    \n    \n      Customer & Operations Analysis:\n      KPI Design & Performance Tracking, Customer Lifecycle Analysis, Revenue & Profitability Analysis, Pipeline Performance Tracking, Process Optimization, Competitive Market Analysis\n    \n    \n      Communication:\n      Technical-to-Business Communication, Cross-Functional Communication, Slide Deck Development\n    \n    \n      Data & BI Tools:\n      SQL, Python, Tableau, Power BI, Excel (Advanced), Snowflake, Rhino3D, AI Assisted Workflow\n    \n  \n\n  \n  Education\n\n  \n    \n      \n        Master of Science in Business Analytics\n        — Rady School of Management, UC San Diego\n      \n      Dec 2026\n    \n    Focus: Customer & Market Analytics, AI for Business, Applied Machine Learning | Coursework in uplift modeling and churn analysis\n  \n\n  \n    \n      \n        Master of Arts in Media, Heritage, and Integrated Product Design\n        — University of Pennsylvania\n      \n      May 2025\n    \n  \n\n  \n    \n      \n        Bachelor of Arts in Communication\n        — University of Colorado Denver\n      \n      May 2023"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Yafei Zhang",
+    "section": "",
+    "text": "As a data-driven business and marketing strategist with experience in business development and public relations, I am passionate about transforming data insights into impactful stories that boost companies’ revenue and enhance brand visibility. I am eager to use analytics skills like Python, SQL, and machine learning models to improve customer interactions, streamline operational processes, and optimize decision-making.\n\n  Through the Lens"
+  },
+  {
+    "objectID": "projects/project2/index.html",
+    "href": "projects/project2/index.html",
+    "title": "Global Wine Market Investment & Sourcing Strategy",
+    "section": "",
+    "text": "Decision-makers needed a data-driven way to balance wine quality, pricing, production scale, and economic context when allocating sourcing and investment portfolios."
+  },
+  {
+    "objectID": "projects/project2/index.html#problem",
+    "href": "projects/project2/index.html#problem",
+    "title": "Global Wine Market Investment & Sourcing Strategy",
+    "section": "",
+    "text": "Decision-makers needed a data-driven way to balance wine quality, pricing, production scale, and economic context when allocating sourcing and investment portfolios."
+  },
+  {
+    "objectID": "projects/project2/index.html#approach",
+    "href": "projects/project2/index.html#approach",
+    "title": "Global Wine Market Investment & Sourcing Strategy",
+    "section": "Approach",
+    "text": "Approach\nDesigned a multi-dashboard analytics system integrating:\n\n130K+ wine reviews\nGlobal GDP per capita data\nWine production & consumption statistics\n\n\n\n\nGlobal Wine Quality & Price Insights Dashboard"
+  },
+  {
+    "objectID": "projects/project2/index.html#key-insights",
+    "href": "projects/project2/index.html#key-insights",
+    "title": "Global Wine Market Investment & Sourcing Strategy",
+    "section": "Key Insights",
+    "text": "Key Insights\nIdentified a two-tier sourcing strategy:\n\n\n\n\n\n\n\n\nTier\nCountries\nRationale\n\n\n\n\nTier 1\nFrance, Italy, Spain\nHigh quality + high production stability\n\n\nTier 2\nUS, Australia, China\nScalable volume with competitive quality\n\n\n\n\n\n\nInvestment Insights by Country\n\n\nAdditional findings:\n\nRevealed underpriced high-quality markets using price-rating analysis\nHighlighted wine varieties offering premium quality at lower cost\n\n\n\n\nInvestment Insights by Variety (Top 20)"
+  },
+  {
+    "objectID": "projects/project2/index.html#impact",
+    "href": "projects/project2/index.html#impact",
+    "title": "Global Wine Market Investment & Sourcing Strategy",
+    "section": "Impact",
+    "text": "Impact\n\nEnables data-driven sourcing, pricing, and portfolio optimization decisions\nSupports both premium positioning and high-volume growth strategies"
+  },
+  {
+    "objectID": "projects/project2/index.html#tools-skills",
+    "href": "projects/project2/index.html#tools-skills",
+    "title": "Global Wine Market Investment & Sourcing Strategy",
+    "section": "Tools & Skills",
+    "text": "Tools & Skills\nTableau · Python (Polars) · SQL-style Joins · Data Cleaning · Investment Scoring Models · Business Intelligence"
+  },
+  {
+    "objectID": "projects/project1/index.html",
+    "href": "projects/project1/index.html",
+    "title": "S-Mobile: Proactive Churn Management",
+    "section": "",
+    "text": "S-Mobile faced a 2% monthly churn rate across 1 million subscribers — each percentage point representing millions in recurring revenue at risk. This project aimed to identify at-risk customers proactively and design cost-effective retention programs."
+  },
+  {
+    "objectID": "projects/project1/index.html#overview",
+    "href": "projects/project1/index.html#overview",
+    "title": "S-Mobile: Proactive Churn Management",
+    "section": "",
+    "text": "S-Mobile faced a 2% monthly churn rate across 1 million subscribers — each percentage point representing millions in recurring revenue at risk. This project aimed to identify at-risk customers proactively and design cost-effective retention programs."
+  },
+  {
+    "objectID": "projects/project1/index.html#modeling",
+    "href": "projects/project1/index.html#modeling",
+    "title": "S-Mobile: Proactive Churn Management",
+    "section": "Modeling",
+    "text": "Modeling\n\nBuilt a weighted Logistic Regression and Random Forest on a 27,300-customer training sample\nApplied 50% oversampling with case weights (1:49) to calibrate predictions back to the real-world 2% churn rate\nAchieved an AUC of 0.688 on the held-out test set"
+  },
+  {
+    "objectID": "projects/project1/index.html#key-insights",
+    "href": "projects/project1/index.html#key-insights",
+    "title": "S-Mobile: Proactive Churn Management",
+    "section": "Key Insights",
+    "text": "Key Insights\nUsed Permutation Importance and Partial Dependence Plots to identify the top actionable churn drivers:\n\n\n\n\n\n\n\nDriver\nImpact\n\n\n\n\nEquipment age (eqpdays)\nCustomers with older devices churn significantly more\n\n\nOverage minutes\nHigh overage predicts dissatisfaction and churn\n\n\nRefurbished handsets\nCustomers with refurbished devices have elevated churn risk\n\n\n\nTogether, these three variables affect customers representing over 30% of the subscriber base."
+  },
+  {
+    "objectID": "projects/project1/index.html#retention-interventions",
+    "href": "projects/project1/index.html#retention-interventions",
+    "title": "S-Mobile: Proactive Churn Management",
+    "section": "Retention Interventions",
+    "text": "Retention Interventions\nDesigned 5 targeted retention actions using counterfactual simulation — modifying each variable in the model to predict what churn would look like if the action were taken:\n\nEquipment upgrade program\nPlan optimization for overage customers\nDevice replacement for refurbished handset holders\nNew customer loyalty incentives\nProactive outreach for high-risk segments"
+  },
+  {
+    "objectID": "projects/project1/index.html#economics",
+    "href": "projects/project1/index.html#economics",
+    "title": "S-Mobile: Proactive Churn Management",
+    "section": "Economics",
+    "text": "Economics\nEvaluated 3 interventions using a 60-month CLV framework across 1M subscribers:\n\n40% margin, 7.44% annual discount rate\nQuantified both the indifference point and proposed intervention cost for each program\nDetermined net profitability to prioritize the highest-ROI retention actions"
+  },
+  {
+    "objectID": "projects/project1/index.html#skills-used",
+    "href": "projects/project1/index.html#skills-used",
+    "title": "S-Mobile: Proactive Churn Management",
+    "section": "Skills Used",
+    "text": "Skills Used\nRandom Forest · Logistic Regression · CLV Analysis · Python · Partial Dependence Plots · Counterfactual Simulation"
+  },
+  {
+    "objectID": "connect.html",
+    "href": "connect.html",
+    "title": "Let’s Connect",
+    "section": "",
+    "text": "I love meeting people who are curious about data, marketing, and the stories\n  numbers can tell. Whether you'd like to chat about a project, explore a\n  collaboration, or just say hello — I'd be glad to hear from you.\n\n\n\n  \n    \n    Email\n  \n  \n    \n    LinkedIn\n  \n  \n    \n    GitHub"
+  },
+  {
+    "objectID": "projects/project3/index.html",
+    "href": "projects/project3/index.html",
+    "title": "Project Overview Portfolio Site",
+    "section": "",
+    "text": "Built a professional portfolio website to present and organize project work in a visually engaging, accessible format. The site serves as a centralized hub for showcasing case studies, creative projects, and professional accomplishments.\nView the live site: yafeiz.wixsite.com/yafei-zhang"
+  },
+  {
+    "objectID": "projects/project3/index.html#overview",
+    "href": "projects/project3/index.html#overview",
+    "title": "Project Overview Portfolio Site",
+    "section": "",
+    "text": "Built a professional portfolio website to present and organize project work in a visually engaging, accessible format. The site serves as a centralized hub for showcasing case studies, creative projects, and professional accomplishments.\nView the live site: yafeiz.wixsite.com/yafei-zhang"
+  },
+  {
+    "objectID": "projects/project3/index.html#approach",
+    "href": "projects/project3/index.html#approach",
+    "title": "Project Overview Portfolio Site",
+    "section": "Approach",
+    "text": "Approach\n\nDesigned the site architecture and layout to guide visitors through project narratives\nApplied visual hierarchy and typography (Libre Baskerville) to reinforce a professional, editorial aesthetic\nBuilt with responsive design principles to ensure usability across desktop and mobile devices"
+  },
+  {
+    "objectID": "projects/project3/index.html#features",
+    "href": "projects/project3/index.html#features",
+    "title": "Project Overview Portfolio Site",
+    "section": "Features",
+    "text": "Features\n\nProject showcase — Dedicated sections for presenting individual projects with context, visuals, and key takeaways\nResponsive layout — Grid and flexbox-based design that adapts to different screen sizes\nView transitions — Smooth page navigation animations for a polished user experience\nAccessibility — Built with browser zoom support and accessible navigation patterns"
+  },
+  {
+    "objectID": "projects/project3/index.html#tools-skills",
+    "href": "projects/project3/index.html#tools-skills",
+    "title": "Project Overview Portfolio Site",
+    "section": "Tools & Skills",
+    "text": "Tools & Skills\nWix · Web Design · UX Design · Responsive Design · Visual Storytelling · Content Strategy"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Global Wine Market Investment & Sourcing Strategy\n\n\n\nBusiness Intelligence\n\nTableau\n\nData Visualization\n\n\n\nBuilt an interactive Tableau dashboard to support wine distributors and investment decision-makers in identifying high-potential sourcing and investment opportunities across global wine markets.\n\n\n\n\n\nJan 15, 2025\n\n\n\n\n\n\n\nS-Mobile: Proactive Churn Management\n\n\n\nMachine Learning\n\nCLV Analysis\n\nMarketing Analytics\n\n\n\nBuilt a predictive churn model for a Singapore telecom with 1 million subscribers, designed targeted retention interventions, and evaluated profitability using a 60-month CLV framework.\n\n\n\n\n\nDec 1, 2024\n\n\n\n\n\n\n\nProject Overview Portfolio Site\n\n\n\nWeb Design\n\nPortfolio\n\nUX Design\n\n\n\nDesigned and built a portfolio website to showcase project work, combining visual storytelling with responsive web design using the Wix platform.\n\n\n\n\n\nApr 1, 2024\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "art.html",
+    "href": "art.html",
+    "title": "Art & Heritage",
+    "section": "",
+    "text": "Where objects breatheand spaces remember\n    \n  \n\n  \n  \n    \n      \n    \n    \n      Before I found my path in analytics, I fell in love with museums — the way\n      a single artifact can collapse centuries into a moment of understanding.\n      My graduate work at the University of Pennsylvania in\n      Media, Heritage, and Integrated Product Design taught me to see\n      design as a bridge between past and present, between the object and the visitor,\n      between data and human experience.\n    \n  \n\n  \n  \n    \n      \n        \n      \n      At the garden labyrinth — where landscape becomes language\n    \n    \n      The Artist's Eye\n      \n        I believe the best design disappears. It doesn't announce itself —\n        it makes you feel something before you understand why.\n        A spiral hedge is not just topiary; it is a meditation on patience.\n        A suspended sculpture is not decoration; it is gravity, reimagined.\n      \n      \n        This is what I carry into every project: the instinct that beauty\n        and rigor are not opposites — they are collaborators.\n      \n    \n  \n\n  \n  \n    \n      The Reading Table\n      \n        Every practice begins with inquiry. These are the texts that shape\n        how I think about cultural ownership, architectural language,\n        and the politics of preservation.\n      \n    \n    \n      \n        \n      \n      \n        Restitution: The Return of Cultural Artifacts\n        How to Read Modern Buildings\n        The Cult of Creativity\n      \n    \n  \n\n  \n  \n    What Guides This Work\n    \n      \n        01\n        Cultural Narrative\n        Every exhibition begins with a question: whose story is being told, and for whom? I design experiences that honor the complexity of heritage.\n      \n      \n        02\n        Material & Memory\n        Objects are not static — they carry the weight of the hands that made them, the journeys they've traveled, and the meanings communities have given them.\n      \n      \n        03\n        Spatial Storytelling\n        The gallery is a language. Light, distance, sequence, and silence — each element shapes how a visitor moves through understanding.\n      \n    \n  \n\n  \n  \n    \n      \n        Featured Collection\n        Project Overview Portfolio\n        \n          A curated portfolio of heritage design work exploring museum exhibition\n          concepts, cultural artifact interpretation, and integrated product design\n          — developed during my graduate studies at UPenn's Weitzman School of Design.\n        \n        \n          \n            Institution\n            University of Pennsylvania\n          \n          \n            Program\n            Media, Heritage & Integrated Product Design\n          \n          \n            Year\n            Spring 2024\n          \n        \n        \n          View Full Collection\n          \n        \n      \n    \n  \n\n  \n  \n    \n      \n    \n    \n      This work shaped how I see data today — not as numbers on a screen,\n      but as stories waiting for the right frame.\n      Heritage taught me that context is everything. Analytics lets me prove it."
+  }
+]
