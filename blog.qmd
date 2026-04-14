@@ -1,0 +1,9 @@
+---
+title: "Blog"
+description: "Thoughts on data, marketing, and the stories numbers tell — by Yafei (Judie) Zhang."
+listing:
+  contents: blog
+  sort: "date desc"
+  type: default
+  fields: [title, description, categories, date]
+---

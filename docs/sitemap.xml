@@ -1,63 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/cv.html</loc>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/blog.html</loc>
+    <lastmod>2026-04-13T21:53:46.634Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/cv.html</loc>
     <lastmod>2026-04-10T06:05:33.646Z</lastmod>
   </url>
   <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/index.html</loc>
-    <lastmod>2026-04-11T16:45:39.405Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/projects/project2/index.html</loc>
-    <lastmod>2026-04-09T04:02:18.422Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/projects/project1/index.html</loc>
-    <lastmod>2026-04-09T04:05:33.256Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/connect.html</loc>
-    <lastmod>2026-04-10T06:05:37.301Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/projects/project3/index.html</loc>
-    <lastmod>2026-04-10T20:23:33.055Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/projects.html</loc>
-    <lastmod>2026-04-10T06:05:35.523Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/personal-website/art.html</loc>
-    <lastmod>2026-04-10T20:34:32.293Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/index.html</loc>
-    <lastmod>2026-04-11T17:08:28.348Z</lastmod>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/blog/ab-testing-intuition/index.html</loc>
+    <lastmod>2026-04-13T21:55:04.538Z</lastmod>
   </url>
   <url>
     <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/lens.html</loc>
     <lastmod>2026-04-11T17:06:17.371Z</lastmod>
   </url>
   <url>
-    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/art.html</loc>
-    <lastmod>2026-04-11T17:11:20.574Z</lastmod>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/projects/project2/index.html</loc>
+    <lastmod>2026-04-09T04:02:18.422Z</lastmod>
   </url>
   <url>
-    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/projects.html</loc>
-    <lastmod>2026-04-10T06:05:35.523Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/projects/project3/index.html</loc>
-    <lastmod>2026-04-10T20:23:33.055Z</lastmod>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/projects/project1/index.html</loc>
+    <lastmod>2026-04-09T04:05:33.256Z</lastmod>
   </url>
   <url>
     <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/connect.html</loc>
     <lastmod>2026-04-10T06:05:37.301Z</lastmod>
   </url>
   <url>
-    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/cv.html</loc>
-    <lastmod>2026-04-10T06:05:33.646Z</lastmod>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/projects/project3/index.html</loc>
+    <lastmod>2026-04-10T20:23:33.055Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/projects.html</loc>
+    <lastmod>2026-04-10T06:05:35.523Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/index.html</loc>
+    <lastmod>2026-04-11T19:15:13.269Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/art.html</loc>
+    <lastmod>2026-04-11T19:12:02.975Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rsm-yaz133.github.io/Yafei-Zhang-Personal-Website-/hw1_completed.html</loc>
+    <lastmod>2026-04-13T21:50:10.911Z</lastmod>
   </url>
 </urlset>

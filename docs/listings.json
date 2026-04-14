@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/blog.html",
+    "items": [
+      "/blog/ab-testing-intuition/index.html"
+    ]
+  },
+  {
     "listing": "/projects.html",
     "items": [
       "/projects/project2/index.html",

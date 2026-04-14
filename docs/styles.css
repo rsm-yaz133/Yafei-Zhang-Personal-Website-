@@ -871,12 +871,23 @@ main#quarto-document-content table tbody tr:hover {
   border: 1px solid #ece0e4;
   padding: 3rem 2.5rem;
   text-align: center;
-  background: linear-gradient(
-    175deg,
-    #fffbfa 0%,
-    #faf8f5 40%,
-    #f8f2f0 100%
-  );
+  position: relative;
+  background-size: cover;
+  background-position: center 40%;
+  background-repeat: no-repeat;
+}
+
+.art-featured-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 252, 250, 0.65);
+  backdrop-filter: blur(1px);
+}
+
+.art-featured-inner > * {
+  position: relative;
+  z-index: 1;
 }
 
 .art-featured-label {
@@ -1011,7 +1022,7 @@ main#quarto-document-content table tbody tr:hover {
   font-weight: 300;
   color: #4a3a40;
   line-height: 2;
-  max-width: 560px;
+  max-width: 720px;
   margin: 0 auto;
   letter-spacing: 0.02em;
 }

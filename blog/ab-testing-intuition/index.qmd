@@ -1,0 +1,285 @@
+---
+title: "What a Simple Button Taught Me About Statistical Thinking"
+description: "I ran a simulated A/B test on two newsletter CTAs — and the real lesson wasn't which button won, but how easily intuition can mislead us without the right statistical guardrails."
+author: "Yafei (Judie) Zhang"
+date: 2025-04-13
+categories: [A/B Testing, Statistics, Marketing Analytics]
+image: "../../Picture1.png"
+format:
+  html:
+    code-fold: true
+    toc: true
+jupyter: python3
+---
+
+## The Question That Started It All
+
+During my MSBA coursework, I found myself staring at a deceptively simple question: *if you change the wording on a sign-up button, how do you know whether the new version is actually better — or whether you just got lucky?*
+
+It sounds trivial. But the deeper I dug, the more I realized this tiny question sits at the heart of every data-driven marketing decision. Every product launch, every email subject line, every pricing experiment — they all come down to the same challenge: **separating signal from noise.**
+
+So I built a simulation from scratch — not because I had to, but because I wanted to *feel* the statistics, not just compute them. Here's what I learned.
+
+
+## Setting the Scene
+
+Picture this: you run a website and your landing page has a newsletter sign-up prompt. For months you've used **"Sign up for our newsletter here!"** (CTA A). A colleague suggests trying **"Stay up to date — join our list!"** (CTA B). Which one actually converts better?
+
+The temptation is to just try the new one for a week and compare. But that approach is riddled with hidden traps — day-of-week effects, seasonal traffic shifts, different user segments arriving at different times. What we need is an **A/B test**: randomly splitting visitors so the *only* systematic difference between groups is the CTA they see.
+
+I modeled each visitor's behavior as a coin flip — a **Bernoulli trial** — where the probability of signing up depends on which CTA they saw:
+
+$$
+\theta = \pi_A - \pi_B
+$$
+
+Playing the role of an omniscient simulator, I set $\pi_A = 0.22$ and $\pi_B = 0.18$ — a 4-percentage-point lift for CTA A — then generated 1,000 visitors per group.
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+
+np.random.seed(42)
+
+# True parameters (known only to us, the simulators)
+pi_A = 0.22
+pi_B = 0.18
+theta_true = pi_A - pi_B  # 0.04
+
+# Simulate 1,000 visitors per group
+n = 1000
+cta_a = np.random.binomial(1, pi_A, size=n)
+cta_b = np.random.binomial(1, pi_B, size=n)
+
+# Point estimate
+theta_hat = cta_a.mean() - cta_b.mean()
+print(f"Sample proportion CTA A: {cta_a.mean():.3f}")
+print(f"Sample proportion CTA B: {cta_b.mean():.3f}")
+print(f"Estimated difference: {theta_hat:.4f}  (true value: {theta_true})")
+```
+
+
+## Lesson 1: Patience Pays Off (The Law of Large Numbers)
+
+The first thing that struck me was how *noisy* small samples are. With only a handful of visitors, the estimated difference bounced wildly — sometimes suggesting CTA B was better when we *know* it isn't. But as the sample grew, the estimate settled down and converged toward the truth.
+
+This is the **Law of Large Numbers** in action — and it carries a practical lesson I think about constantly now: **don't make decisions on small data.** Early results from a campaign or test can be profoundly misleading.
+
+```{python}
+#| echo: false
+
+diffs = cta_a - cta_b
+cumulative_avg = np.cumsum(diffs) / np.arange(1, n + 1)
+
+fig, ax = plt.subplots(figsize=(9, 4.5))
+ax.plot(range(1, n + 1), cumulative_avg, color="#2563eb", linewidth=1.2, label="Running average of difference")
+ax.axhline(y=theta_true, color="#dc2626", linestyle="--", linewidth=1.2, label=f"True difference = {theta_true}")
+ax.set_xlabel("Number of visitors observed", fontsize=12)
+ax.set_ylabel("Cumulative average difference", fontsize=12)
+ax.set_title("Why Small Samples Lie: Convergence of the Estimated Effect", fontsize=14, fontweight="bold")
+ax.legend(fontsize=11)
+ax.spines[["top", "right"]].set_visible(False)
+plt.tight_layout()
+plt.show()
+```
+
+That chart changed how I think about marketing dashboards. When someone shows me a week's worth of data and says "look, the new version is winning," my first instinct now is: *how stable is that estimate?*
+
+
+## Lesson 2: Quantifying Uncertainty (The Bootstrap)
+
+A point estimate is only half the story. Saying "CTA A is 4 points better" means nothing without knowing how *confident* we should be. Enter the **bootstrap** — a beautifully simple idea: resample your data with replacement thousands of times and see how much the estimate varies.
+
+```{python}
+n_boot = 1000
+boot_thetas = np.empty(n_boot)
+
+for i in range(n_boot):
+    a_star = np.random.choice(cta_a, size=n, replace=True)
+    b_star = np.random.choice(cta_b, size=n, replace=True)
+    boot_thetas[i] = a_star.mean() - b_star.mean()
+
+boot_se = boot_thetas.std(ddof=1)
+
+# Analytical comparison
+p_a = cta_a.mean()
+p_b = cta_b.mean()
+analytical_se = np.sqrt(p_a * (1 - p_a) / n + p_b * (1 - p_b) / n)
+```
+
+```{python}
+#| echo: false
+
+ci_lower = theta_hat - 1.96 * boot_se
+ci_upper = theta_hat + 1.96 * boot_se
+
+print(f"Point estimate:    {theta_hat:.4f}")
+print(f"Bootstrap SE:      {boot_se:.4f}")
+print(f"Analytical SE:     {analytical_se:.4f}")
+print(f"95% CI:            [{ci_lower:.4f}, {ci_upper:.4f}]")
+```
+
+What I love about the bootstrap is its honesty. It doesn't assume your data follows a textbook distribution — it lets the data speak for itself. In marketing, where real-world data is messy and rarely Normal, that pragmatism matters.
+
+
+## Lesson 3: Watching the Bell Curve Emerge (CLT)
+
+The **Central Limit Theorem** is one of those results that sounds abstract until you *see* it. I simulated 1,000 experiments at four different sample sizes and watched the sampling distribution of the estimated effect transform from a jagged, lumpy mess into a smooth bell curve.
+
+```{python}
+#| echo: false
+
+sample_sizes = [25, 50, 100, 500]
+n_sims = 1000
+
+fig, axes = plt.subplots(2, 2, figsize=(10, 7), sharex=True)
+axes = axes.flatten()
+
+colors = ["#f59e0b", "#10b981", "#6366f1", "#ef4444"]
+
+for idx, ns in enumerate(sample_sizes):
+    theta_hats = np.empty(n_sims)
+    for i in range(n_sims):
+        a_sim = np.random.binomial(1, pi_A, size=ns)
+        b_sim = np.random.binomial(1, pi_B, size=ns)
+        theta_hats[i] = a_sim.mean() - b_sim.mean()
+
+    axes[idx].hist(theta_hats, bins=30, color=colors[idx], edgecolor="white", alpha=0.85, density=True)
+    axes[idx].axvline(theta_true, color="#1e293b", linestyle="--", linewidth=1.2)
+    axes[idx].set_title(f"n = {ns}", fontsize=13, fontweight="bold")
+    axes[idx].spines[["top", "right"]].set_visible(False)
+    if idx >= 2:
+        axes[idx].set_xlabel("Estimated effect", fontsize=11)
+    if idx % 2 == 0:
+        axes[idx].set_ylabel("Density", fontsize=11)
+
+fig.suptitle("The Bell Curve Emerges: How Sample Size Shapes Our Estimates", fontsize=14, fontweight="bold", y=1.01)
+plt.tight_layout()
+plt.show()
+```
+
+At $n = 25$, you could flip a coin and get a more reliable answer. By $n = 500$, the distribution is tight and centered on the truth. This is why sample size calculators exist — and why I now refuse to sign off on an A/B test without a proper power analysis first.
+
+
+## Lesson 4: Is the Difference Real? (Hypothesis Testing)
+
+With the CLT backing us up, we can ask the critical question: **is the difference we observed large enough that it's unlikely to be pure chance?**
+
+We standardize our estimate into a z-statistic and compute a p-value — the probability of seeing a result this extreme if the two CTAs were actually identical.
+
+```{python}
+z_stat = theta_hat / analytical_se
+p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+
+print(f"Estimated effect:  {theta_hat:.4f}")
+print(f"Standard error:    {analytical_se:.4f}")
+print(f"z-statistic:       {z_stat:.4f}")
+print(f"p-value:           {p_value:.4f}")
+```
+
+```{python}
+#| echo: false
+
+if p_value < 0.05:
+    verdict = "We reject the null — there is statistically significant evidence that CTA A outperforms CTA B."
+else:
+    verdict = "We fail to reject the null — the observed difference is not statistically significant."
+
+print(f"\nVerdict: {verdict}")
+```
+
+A technical note worth remembering: this is often called a "t-test," but with binary data it's really a **z-test justified by the CLT**. For large samples the distinction is negligible, but understanding what's actually happening under the hood matters when the assumptions get pushed.
+
+
+## Lesson 5: The Regression Connection
+
+Here's the insight that tied everything together for me: a two-sample test is **mathematically identical** to a simple linear regression with a binary predictor. The treatment effect $\hat{\theta}$ is just the OLS coefficient $\hat{\beta}_1$.
+
+```{python}
+import statsmodels.api as sm
+
+Y = np.concatenate([cta_a, cta_b])
+D = np.concatenate([np.ones(n), np.zeros(n)])
+
+X = sm.add_constant(D)
+model = sm.OLS(Y, X).fit()
+```
+
+```{python}
+#| echo: false
+
+coef_table = pd.DataFrame({
+    "Coefficient": ["Intercept (CTA B baseline)", "Treatment effect (CTA A lift)"],
+    "Estimate": [f"{model.params[0]:.4f}", f"{model.params[1]:.4f}"],
+    "Std Error": [f"{model.bse[0]:.4f}", f"{model.bse[1]:.4f}"],
+    "p-value": [f"{model.pvalues[0]:.4f}", f"{model.pvalues[1]:.4f}"]
+})
+
+print("OLS Regression Results")
+print(coef_table.to_string(index=False))
+print(f"\nManual estimate: {theta_hat:.4f}  |  Regression β₁: {model.params[1]:.4f}")
+```
+
+Why does this matter? Because the regression framework *scales*. Want to control for device type or time of day? Add covariates. Testing three CTAs? Add indicators. The simple A/B test is just the special case — and seeing that connection made the whole framework click for me.
+
+
+## The Biggest Lesson: Don't Peek
+
+This was the finding that genuinely surprised me. I simulated a scenario where there is **no real difference** between the CTAs ($\pi_A = \pi_B = 0.20$), but an impatient manager checks the results every 100 visitors and stops the test as soon as $p < 0.05$.
+
+```{python}
+n_experiments = 10000
+peek_points = np.arange(100, 1100, 100)
+false_positives = 0
+pi_null = 0.20
+
+for _ in range(n_experiments):
+    a_full = np.random.binomial(1, pi_null, size=1000)
+    b_full = np.random.binomial(1, pi_null, size=1000)
+
+    for peek_n in peek_points:
+        a_peek = a_full[:peek_n]
+        b_peek = b_full[:peek_n]
+
+        p_a_hat = a_peek.mean()
+        p_b_hat = b_peek.mean()
+        theta_peek = p_a_hat - p_b_hat
+        se_peek = np.sqrt(p_a_hat * (1 - p_a_hat) / peek_n + p_b_hat * (1 - p_b_hat) / peek_n)
+
+        if se_peek > 0:
+            z_peek = theta_peek / se_peek
+            p_val_peek = 2 * (1 - stats.norm.cdf(abs(z_peek)))
+            if p_val_peek < 0.05:
+                false_positives += 1
+                break
+
+false_positive_rate = false_positives / n_experiments
+```
+
+```{python}
+#| echo: false
+
+print(f"Experiments simulated:    {n_experiments:,}")
+print(f"False positive rate:      {false_positive_rate:.1%}")
+print(f"Expected (no peeking):    5.0%")
+print(f"Inflation factor:         {false_positive_rate / 0.05:.1f}×")
+```
+
+The false positive rate balloons to roughly **two to three times** the nominal 5%. In a world where there is *no real winner*, peeking would lead you to confidently pick one anyway — about 15% of the time.
+
+This result changed how I think about experimentation culture in organizations. The instinct to check early and act fast is deeply human, but it's statistically dangerous. If you must monitor results in real time, use methods built for it — **sequential testing** or **always-valid confidence intervals** — not the classical fixed-sample test.
+
+
+## What I Took Away
+
+This exercise was about more than passing a homework assignment. It gave me a visceral understanding of ideas I now carry into every analytics project:
+
+1. **Small samples lie.** Don't trust early results — let the Law of Large Numbers do its work.
+2. **Always quantify uncertainty.** A point estimate without a confidence interval is a number without context.
+3. **The bell curve is your friend.** The CLT is why hypothesis testing works — and why sample size planning matters.
+4. **Testing = regression.** Seeing the equivalence unlocks a much more powerful and flexible toolkit.
+5. **Don't let impatience corrupt your evidence.** Peeking inflates false positives. Design your monitoring strategy *before* you launch the test.
+
+As someone building a career at the intersection of marketing and data science, I believe the most valuable skill isn't knowing how to run a t-test — it's knowing *when the t-test is lying to you.*
