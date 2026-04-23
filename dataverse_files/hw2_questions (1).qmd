@@ -1,0 +1,416 @@
+---
+title: "Replication of Angrist and Lavy (1999)"
+subtitle: "Using Maimonides' Rule to Estimate the Effect of Class Size on Student Achievement"
+author: "Judie"
+date: today
+callout-appearance: minimal
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(haven)
+library(fixest)
+library(estimatr)
+library(modelsummary)
+library(kableExtra)
+```
+
+
+## Introduction
+
+Angrist and Lavy (1999) exploit a natural experiment arising from **Maimonides' Rule** --- an administrative rule in Israel that caps class sizes at 40 students. When enrollment crosses a multiple of 40, an additional class is created, producing a sharp, discontinuous drop in predicted class size. The authors use this rule as an instrumental variable to estimate the causal effect of class size on student achievement (reading and math scores) for 4th and 5th graders in Israeli public schools.
+
+The key identification strategy is that Maimonides' Rule creates exogenous variation in actual class size: schools with enrollment just above a cutoff (e.g., 41, 81, 121) are predicted to have smaller classes than schools just below. This allows for a regression-discontinuity / instrumental-variables approach that overcomes the endogeneity problem inherent in OLS estimates of class size effects.
+
+This document replicates Tables II--V from the published paper using R.
+
+
+## Data Loading and Cleaning
+
+The data consist of class-level observations for 4th and 5th graders in Israeli public schools. The cleaning steps follow the original Stata replication code exactly.
+
+```{r}
+#| label: data-cleaning
+
+# Function to load and clean data (mirrors the Stata code)
+clean_data <- function(filepath) {
+  df <- read_dta(filepath, encoding = "latin1")
+
+  # Fix scores > 100 (same as Stata: replace avg = avg - 100 if avg > 100)
+  df$avgverb[df$avgverb > 100 & !is.na(df$avgverb)] <-
+    df$avgverb[df$avgverb > 100 & !is.na(df$avgverb)] - 100
+  df$avgmath[df$avgmath > 100 & !is.na(df$avgmath)] <-
+    df$avgmath[df$avgmath > 100 & !is.na(df$avgmath)] - 100
+
+  # Maimonides' Rule: predicted class size
+  # func1 uses c_size (enrollment), func2 uses cohsize
+  df$func1 <- df$c_size / (floor((df$c_size - 1) / 40) + 1)
+  df$func2 <- df$cohsize / (floor(df$cohsize / 40) + 1)
+
+  # Set scores to NA if test sample size is 0
+  df$avgverb[df$verbsize == 0] <- NA
+  df$passverb[df$verbsize == 0] <- NA
+  df$avgmath[df$mathsize == 0] <- NA
+  df$passmath[df$mathsize == 0] <- NA
+
+  # Sample restrictions (same as Stata)
+  df <- df[df$classize > 1 & df$classize < 45 & df$c_size > 5, ]
+  df <- df[df$c_leom == 1 & df$c_pik < 3, ]
+
+  return(df)
+}
+
+grade5 <- clean_data("final5.dta")
+grade4 <- clean_data("final4.dta")
+
+cat("5th graders: n =", nrow(grade5), "\n")
+cat("4th graders: n =", nrow(grade4), "\n")
+```
+
+
+## Main Analysis
+
+### Table II: OLS Estimates of the Effect of Class Size on Test Scores
+
+Table II presents naive OLS regressions of average reading and math scores on actual class size, with progressively richer controls. Standard errors are clustered at the school level.
+
+```{r}
+#| label: table-2
+
+# --- 5th Grade ---
+t2_5v1 <- feols(avgverb ~ classize, data = grade5, cluster = ~schlcode)
+t2_5v2 <- feols(avgverb ~ classize + tipuach, data = grade5, cluster = ~schlcode)
+t2_5v3 <- feols(avgverb ~ classize + tipuach + c_size, data = grade5, cluster = ~schlcode)
+
+t2_5m1 <- feols(avgmath ~ classize, data = grade5, cluster = ~schlcode)
+t2_5m2 <- feols(avgmath ~ classize + tipuach, data = grade5, cluster = ~schlcode)
+t2_5m3 <- feols(avgmath ~ classize + tipuach + c_size, data = grade5, cluster = ~schlcode)
+
+# --- 4th Grade ---
+t2_4v1 <- feols(avgverb ~ classize, data = grade4, cluster = ~schlcode)
+t2_4v2 <- feols(avgverb ~ classize + tipuach, data = grade4, cluster = ~schlcode)
+t2_4v3 <- feols(avgverb ~ classize + tipuach + c_size, data = grade4, cluster = ~schlcode)
+
+t2_4m1 <- feols(avgmath ~ classize, data = grade4, cluster = ~schlcode)
+t2_4m2 <- feols(avgmath ~ classize + tipuach, data = grade4, cluster = ~schlcode)
+t2_4m3 <- feols(avgmath ~ classize + tipuach + c_size, data = grade4, cluster = ~schlcode)
+```
+
+#### Panel A: 5th Grade
+
+```{r}
+#| label: table-2-panel-a
+
+modelsummary(
+  list("Reading (1)" = t2_5v1, "Reading (2)" = t2_5v2, "Reading (3)" = t2_5v3,
+       "Math (4)" = t2_5m1, "Math (5)" = t2_5m2, "Math (6)" = t2_5m3),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("classize" = "Class size", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table II, Panel A: 5th Grade OLS Estimates"
+)
+```
+
+#### Panel B: 4th Grade
+
+```{r}
+#| label: table-2-panel-b
+
+modelsummary(
+  list("Reading (7)" = t2_4v1, "Reading (8)" = t2_4v2, "Reading (9)" = t2_4v3,
+       "Math (10)" = t2_4m1, "Math (11)" = t2_4m2, "Math (12)" = t2_4m3),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("classize" = "Class size", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table II, Panel B: 4th Grade OLS Estimates"
+)
+```
+
+
+### Table III: Reduced-Form Estimates Using Maimonides' Rule
+
+Table III regresses outcomes directly on the predicted class size from Maimonides' Rule (`func1`), both for the full sample and a discontinuity sample restricted to enrollment counts near the cutoffs (36--45, 76--85, 116--125).
+
+```{r}
+#| label: table-3
+
+# Create discontinuity sample indicator
+grade5$disc <- with(grade5,
+  (c_size >= 36 & c_size <= 45) | (c_size >= 76 & c_size <= 85) |
+  (c_size >= 116 & c_size <= 125))
+
+grade4$disc <- with(grade4,
+  (c_size >= 36 & c_size <= 45) | (c_size >= 76 & c_size <= 85) |
+  (c_size >= 116 & c_size <= 125))
+
+# Restrict to non-missing verbal scores (as in Stata: keep if avgverb~=.)
+g5_t3 <- grade5[!is.na(grade5$avgverb), ]
+g4_t3 <- grade4[!is.na(grade4$avgverb), ]
+
+run_table3 <- function(df, dvar, samp_label) {
+  if (samp_label == "all") {
+    d <- df
+  } else {
+    d <- df[df$disc == TRUE, ]
+  }
+  m1 <- feols(as.formula(paste(dvar, "~ func1 + tipuach")), data = d, cluster = ~schlcode)
+  m2 <- feols(as.formula(paste(dvar, "~ func1 + tipuach + c_size")), data = d, cluster = ~schlcode)
+  list(m1, m2)
+}
+```
+
+#### Panel A: 5th Grade
+
+```{r}
+#| label: table-3-panel-a
+
+# Full sample
+t3_5_cs_all   <- run_table3(g5_t3, "classize", "all")
+t3_5_verb_all <- run_table3(g5_t3, "avgverb", "all")
+t3_5_math_all <- run_table3(g5_t3, "avgmath", "all")
+
+# Discontinuity sample
+t3_5_cs_disc   <- run_table3(g5_t3, "classize", "disc")
+t3_5_verb_disc <- run_table3(g5_t3, "avgverb", "disc")
+t3_5_math_disc <- run_table3(g5_t3, "avgmath", "disc")
+
+modelsummary(
+  list("Class size" = t3_5_cs_all[[1]], "Class size" = t3_5_cs_all[[2]],
+       "Reading" = t3_5_verb_all[[1]], "Reading" = t3_5_verb_all[[2]],
+       "Math" = t3_5_math_all[[1]], "Math" = t3_5_math_all[[2]]),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("func1" = "Maimonides' Rule", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table III, Panel A: 5th Grade Full Sample"
+)
+
+modelsummary(
+  list("Class size" = t3_5_cs_disc[[1]], "Class size" = t3_5_cs_disc[[2]],
+       "Reading" = t3_5_verb_disc[[1]], "Reading" = t3_5_verb_disc[[2]],
+       "Math" = t3_5_math_disc[[1]], "Math" = t3_5_math_disc[[2]]),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("func1" = "Maimonides' Rule", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table III, Panel A: 5th Grade Discontinuity Sample"
+)
+```
+
+#### Panel B: 4th Grade
+
+```{r}
+#| label: table-3-panel-b
+
+# Full sample
+t3_4_cs_all   <- run_table3(g4_t3, "classize", "all")
+t3_4_verb_all <- run_table3(g4_t3, "avgverb", "all")
+t3_4_math_all <- run_table3(g4_t3, "avgmath", "all")
+
+# Discontinuity sample
+t3_4_cs_disc   <- run_table3(g4_t3, "classize", "disc")
+t3_4_verb_disc <- run_table3(g4_t3, "avgverb", "disc")
+t3_4_math_disc <- run_table3(g4_t3, "avgmath", "disc")
+
+modelsummary(
+  list("Class size" = t3_4_cs_all[[1]], "Class size" = t3_4_cs_all[[2]],
+       "Reading" = t3_4_verb_all[[1]], "Reading" = t3_4_verb_all[[2]],
+       "Math" = t3_4_math_all[[1]], "Math" = t3_4_math_all[[2]]),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("func1" = "Maimonides' Rule", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table III, Panel B: 4th Grade Full Sample"
+)
+
+modelsummary(
+  list("Class size" = t3_4_cs_disc[[1]], "Class size" = t3_4_cs_disc[[2]],
+       "Reading" = t3_4_verb_disc[[1]], "Reading" = t3_4_verb_disc[[2]],
+       "Math" = t3_4_math_disc[[1]], "Math" = t3_4_math_disc[[2]]),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("func1" = "Maimonides' Rule", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table III, Panel B: 4th Grade Discontinuity Sample"
+)
+```
+
+
+### Table IV: 2SLS Estimates -- 5th Grade
+
+Table IV presents the main IV results for 5th graders, instrumenting actual class size with predicted class size from Maimonides' Rule (`func1`). Specifications progressively add enrollment controls, a quadratic in enrollment, and a piecewise-linear trend.
+
+```{r}
+#| label: table-4
+
+# Additional variables for Table IV/V
+g5_t3$c_size2 <- (g5_t3$c_size^2) / 100
+
+# Piecewise linear trend (as in Stata code)
+g5_t3$trend <- NA
+g5_t3$trend[g5_t3$c_size >= 0 & g5_t3$c_size <= 40]   <- g5_t3$c_size[g5_t3$c_size >= 0 & g5_t3$c_size <= 40]
+g5_t3$trend[g5_t3$c_size >= 41 & g5_t3$c_size <= 80]   <- 20 + g5_t3$c_size[g5_t3$c_size >= 41 & g5_t3$c_size <= 80] / 2
+g5_t3$trend[g5_t3$c_size >= 81 & g5_t3$c_size <= 120]  <- 100/3 + g5_t3$c_size[g5_t3$c_size >= 81 & g5_t3$c_size <= 120] / 3
+g5_t3$trend[g5_t3$c_size >= 121 & g5_t3$c_size <= 160] <- 130/3 + g5_t3$c_size[g5_t3$c_size >= 121 & g5_t3$c_size <= 160] / 4
+
+run_table4 <- function(df, dvar) {
+  # Full sample
+  m1 <- feols(as.formula(paste(dvar, "~ tipuach | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+  m2 <- feols(as.formula(paste(dvar, "~ tipuach + c_size | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+  m3 <- feols(as.formula(paste(dvar, "~ tipuach + c_size + c_size2 | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+  m4 <- feols(as.formula(paste(dvar, "~ trend | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+
+  # Discontinuity sample
+  disc_df <- df[df$disc == TRUE, ]
+  m5 <- feols(as.formula(paste(dvar, "~ tipuach | classize ~ func1")),
+              data = disc_df, cluster = ~schlcode)
+  m6 <- feols(as.formula(paste(dvar, "~ tipuach + c_size | classize ~ func1")),
+              data = disc_df, cluster = ~schlcode)
+
+  list(full1 = m1, full2 = m2, full3 = m3, full4 = m4, disc1 = m5, disc2 = m6)
+}
+
+t4_verb <- run_table4(g5_t3, "avgverb")
+t4_math <- run_table4(g5_t3, "avgmath")
+```
+
+#### Reading Scores
+
+```{r}
+#| label: table-4-reading
+
+modelsummary(
+  list("Full (1)" = t4_verb$full1, "Full (2)" = t4_verb$full2,
+       "Full (3)" = t4_verb$full3, "Full (4)" = t4_verb$full4,
+       "Disc (5)" = t4_verb$disc1, "Disc (6)" = t4_verb$disc2),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("fit_classize" = "Class size (instrumented)",
+               "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment", "c_size2" = "Enrollment sq/100",
+               "trend" = "Piecewise trend"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table IV: 2SLS Estimates, 5th Grade Reading Scores"
+)
+```
+
+#### Math Scores
+
+```{r}
+#| label: table-4-math
+
+modelsummary(
+  list("Full (1)" = t4_math$full1, "Full (2)" = t4_math$full2,
+       "Full (3)" = t4_math$full3, "Full (4)" = t4_math$full4,
+       "Disc (5)" = t4_math$disc1, "Disc (6)" = t4_math$disc2),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("fit_classize" = "Class size (instrumented)",
+               "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment", "c_size2" = "Enrollment sq/100",
+               "trend" = "Piecewise trend"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table IV: 2SLS Estimates, 5th Grade Math Scores"
+)
+```
+
+
+### Table V: 2SLS Estimates -- 4th Grade
+
+Table V repeats the IV analysis for 4th graders.
+
+```{r}
+#| label: table-5
+
+g4_t3$c_size2 <- (g4_t3$c_size^2) / 100
+
+g4_t3$trend <- NA
+g4_t3$trend[g4_t3$c_size >= 0 & g4_t3$c_size <= 40]   <- g4_t3$c_size[g4_t3$c_size >= 0 & g4_t3$c_size <= 40]
+g4_t3$trend[g4_t3$c_size >= 41 & g4_t3$c_size <= 80]   <- 20 + g4_t3$c_size[g4_t3$c_size >= 41 & g4_t3$c_size <= 80] / 2
+g4_t3$trend[g4_t3$c_size >= 81 & g4_t3$c_size <= 120]  <- 100/3 + g4_t3$c_size[g4_t3$c_size >= 81 & g4_t3$c_size <= 120] / 3
+g4_t3$trend[g4_t3$c_size >= 121 & g4_t3$c_size <= 160] <- 130/3 + g4_t3$c_size[g4_t3$c_size >= 121 & g4_t3$c_size <= 160] / 4
+
+t5_verb <- run_table4(g4_t3, "avgverb")
+t5_math <- run_table4(g4_t3, "avgmath")
+```
+
+#### Reading Scores
+
+```{r}
+#| label: table-5-reading
+
+modelsummary(
+  list("Full (1)" = t5_verb$full1, "Full (2)" = t5_verb$full2,
+       "Full (3)" = t5_verb$full3, "Full (4)" = t5_verb$full4,
+       "Disc (5)" = t5_verb$disc1, "Disc (6)" = t5_verb$disc2),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("fit_classize" = "Class size (instrumented)",
+               "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment", "c_size2" = "Enrollment sq/100",
+               "trend" = "Piecewise trend"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table V: 2SLS Estimates, 4th Grade Reading Scores"
+)
+```
+
+#### Math Scores
+
+```{r}
+#| label: table-5-math
+
+modelsummary(
+  list("Full (1)" = t5_math$full1, "Full (2)" = t5_math$full2,
+       "Full (3)" = t5_math$full3, "Full (4)" = t5_math$full4,
+       "Disc (5)" = t5_math$disc1, "Disc (6)" = t5_math$disc2),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("fit_classize" = "Class size (instrumented)",
+               "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment", "c_size2" = "Enrollment sq/100",
+               "trend" = "Piecewise trend"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table V: 2SLS Estimates, 4th Grade Math Scores"
+)
+```
+
+
+## Something Additional
+
+### Visualizing Maimonides' Rule: The First Stage
+
+To build intuition for the identification strategy, this plot shows how Maimonides' Rule creates discontinuous jumps in predicted class size at multiples of 40. The sawtooth pattern in predicted class size provides the exogenous variation used for identification.
+
+```{r}
+#| label: maimonides-plot
+#| fig-cap: "Actual vs. predicted class size from Maimonides' Rule (5th graders)"
+#| fig-width: 8
+#| fig-height: 5
+
+# Collapse to enrollment-level means
+library(stats)
+agg5 <- aggregate(cbind(classize, func1) ~ c_size, data = g5_t3, FUN = mean)
+
+plot(agg5$c_size, agg5$classize,
+     pch = 16, cex = 0.6, col = "steelblue",
+     xlab = "Enrollment count", ylab = "Class size",
+     main = "Actual vs. Predicted Class Size (5th Grade)",
+     ylim = c(10, 45))
+lines(agg5$c_size[order(agg5$c_size)], agg5$func1[order(agg5$c_size)],
+      col = "firebrick", lwd = 2)
+abline(v = c(40, 80, 120), lty = 2, col = "gray60")
+legend("topright", legend = c("Actual class size (mean)", "Maimonides' Rule prediction"),
+       pch = c(16, NA), lty = c(NA, 1), lwd = c(NA, 2),
+       col = c("steelblue", "firebrick"), bty = "n")
+```
+
+This figure illustrates the key mechanism: at enrollment counts just above 40, 80, and 120, Maimonides' Rule predicts a sharp drop in class size as the school must split into additional classes. The actual class sizes broadly follow this pattern but with considerable noise --- exactly the kind of variation that makes a strong first stage for the IV strategy.

@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/blog/angrist-lavy-replication/index.html",
       "/blog/ab-testing-intuition/index.html"
     ]
   },

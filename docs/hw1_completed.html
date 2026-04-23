@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Your Name">
-<meta name="dcterms.date" content="2026-04-13">
+<meta name="dcterms.date" content="2026-04-22">
 
 <title>A/B Testing a Call to Action – Yafei (Judie) Zhang</title>
 <style>
@@ -260,7 +260,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 13, 2026</p>
+      <p class="date">April 22, 2026</p>
     </div>
   </div>
   
@@ -301,7 +301,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="simulating-data">Simulating Data</h2>
 <p>In practice, we would never know the true values of <span class="math inline">\(\pi_A\)</span> and <span class="math inline">\(\pi_B\)</span> — that’s the whole reason we run the experiment. But for this exercise, we’ll play the role of an omniscient simulator and <strong>set the truth ourselves</strong>. This lets us study how our estimator behaves when we already know the right answer — a powerful way to build intuition.</p>
 <p>We’ll set <span class="math inline">\(\pi_A = 0.22\)</span> and <span class="math inline">\(\pi_B = 0.18\)</span>, giving a true difference of <span class="math inline">\(\theta = 0.04\)</span> (a 4-percentage-point lift for CTA A). Below, we simulate 1,000 visitors per group.</p>
-<div id="c82fe2fe" class="cell" data-execution_count="1">
+<div id="f65e757c" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -335,7 +335,7 @@ Estimated θ̂ = 0.0380  (true θ = 0.04000000000000001)</code></pre>
 <h2 class="anchored" data-anchor-id="the-law-of-large-numbers">The Law of Large Numbers</h2>
 <p>The <strong>Law of Large Numbers (LLN)</strong> tells us that as we collect more data, the sample mean converges to the population mean. For our A/B test this is reassuring: it means that <span class="math inline">\(\hat\theta\)</span> will get closer and closer to the true <span class="math inline">\(\theta\)</span> as our sample grows. In other words, if we run the test long enough, we <em>will</em> find the right answer.</p>
 <p>Let’s see this in action. We’ll compute a running (cumulative) average of the element-wise differences between our CTA A and CTA B draws and plot it against the number of observations.</p>
-<div id="a497cca9" class="cell" data-execution_count="2">
+<div id="f2a092eb" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -350,7 +350,7 @@ Estimated θ̂ = 0.0380  (true θ = 0.04000000000000001)</code></pre>
 <h2 class="anchored" data-anchor-id="bootstrap-standard-errors">Bootstrap Standard Errors</h2>
 <p>Knowing that <span class="math inline">\(\hat\theta\)</span> converges to <span class="math inline">\(\theta\)</span> is comforting, but a point estimate alone isn’t very useful — we also need a sense of <strong>how uncertain</strong> that estimate is. That’s where the <strong>bootstrap</strong> comes in.</p>
 <p>The bootstrap is a resampling technique: we treat our observed data as a stand-in for the population, draw many samples <em>with replacement</em> from it, and compute our statistic on each resample. The spread of those resampled statistics gives us an estimate of the standard error — no closed-form formula required.</p>
-<div id="0fdad064" class="cell" data-execution_count="3">
+<div id="42f8a547" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n_boot <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>boot_thetas <span class="op">=</span> np.empty(n_boot)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -365,12 +365,12 @@ Estimated θ̂ = 0.0380  (true θ = 0.04000000000000001)</code></pre>
 <p><span class="math display">\[
 SE(\hat\theta) = \sqrt{\frac{\hat\pi_A(1 - \hat\pi_A)}{n_A} + \frac{\hat\pi_B(1 - \hat\pi_B)}{n_B}}
 \]</span></p>
-<div id="05ae9e94" class="cell" data-execution_count="4">
+<div id="5d9338c5" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p_a <span class="op">=</span> cta_a.mean()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>p_b <span class="op">=</span> cta_b.mean()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>analytical_se <span class="op">=</span> np.sqrt(p_a <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p_a) <span class="op">/</span> n <span class="op">+</span> p_b <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p_b) <span class="op">/</span> n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="f54f90b7" class="cell" data-execution_count="5">
+<div id="82be1a20" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>=== Standard Error Comparison ===
     Method Standard Error
@@ -392,7 +392,7 @@ Point estimate (θ̂) 0.0380
 <h2 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h2>
 <p>The <strong>Central Limit Theorem (CLT)</strong> is one of the most remarkable results in statistics: no matter what the underlying distribution of the data looks like, the sampling distribution of the sample mean becomes approximately <strong>Normal</strong> as the sample size grows. Since <span class="math inline">\(\hat\theta\)</span> is a difference of two sample means, the CLT applies to it as well.</p>
 <p>Let’s watch this happen. For each of four sample sizes — <span class="math inline">\(n \in \{25, 50, 100, 500\}\)</span> — we’ll simulate 1,000 experiments, compute <span class="math inline">\(\hat\theta\)</span> each time, and plot the resulting histogram.</p>
-<div id="e3a7e86d" class="cell" data-execution_count="6">
+<div id="086ae807" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -422,7 +422,7 @@ z = \frac{\hat\theta - 0}{SE(\hat\theta)}
 <li>Because we know the distribution of <span class="math inline">\(z\)</span> under <span class="math inline">\(H_0\)</span>, we can compute a <strong>p-value</strong> — the probability of seeing a test statistic at least as extreme as what we observed, if the null were true.</li>
 </ol>
 <p>A note on terminology: this procedure is often called a “t-test,” but that label is slightly misleading here. The classical t-test assumes the data are drawn from a Normal distribution — when the variance is estimated, the test statistic follows an exact <span class="math inline">\(t\)</span>-distribution. Our data are Bernoulli (zeros and ones), not Normal, so there’s no exact <span class="math inline">\(t\)</span>-distribution result. What we’re really doing is a <strong>z-test</strong> justified by the CLT. In practice, for large samples the <span class="math inline">\(t\)</span>-distribution and the standard Normal are nearly identical, so the distinction rarely matters — but it’s good to know what’s actually going on under the hood.</p>
-<div id="78099b74" class="cell" data-execution_count="7">
+<div id="1de868c9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> theta_hat <span class="op">/</span> analytical_se</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -437,7 +437,7 @@ z-stat   = 2.1388
 p-value  = 0.0325</code></pre>
 </div>
 </div>
-<div id="7e751877" class="cell" data-execution_count="8">
+<div id="fb1a00f5" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>Conclusion: we reject the null hypothesis at the 5% significance level — there is statistically significant evidence that CTA A outperforms CTA B.</code></pre>
 </div>
@@ -461,7 +461,7 @@ Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i
 <li><span class="math inline">\(\beta_0 + \beta_1\)</span> is the expected outcome when <span class="math inline">\(D_i = 1\)</span> — i.e., the mean of the A group, estimating <span class="math inline">\(\pi_A\)</span>.</li>
 <li>Therefore <span class="math inline">\(\beta_1 = \pi_A - \pi_B = \theta\)</span>, so the OLS estimate <span class="math inline">\(\hat\beta_1\)</span> is numerically identical to <span class="math inline">\(\hat\theta\)</span>.</li>
 </ul>
-<div id="5e54e8a1" class="cell" data-execution_count="9">
+<div id="653f3938" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.concatenate([cta_a, cta_b])</span>
@@ -470,7 +470,7 @@ Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(D)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(Y, X).fit()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="539e537a" class="cell" data-execution_count="10">
+<div id="04fa4c40" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>=== OLS Regression Results ===
                 Coefficient Estimate Std Error t-statistic p-value
@@ -489,7 +489,7 @@ Compare: manual z  = 2.1388, regression t  = 2.1377</code></pre>
 <p>Your boss is impatient. Rather than waiting for the full 1,000 visitors per group, she wants to check the results after every 100 visitors — at <span class="math inline">\(n = 100, 200, \ldots, 1000\)</span> — and declare a winner as soon as any test hits <span class="math inline">\(p &lt; 0.05\)</span>. What could go wrong?</p>
 <p><strong>Quite a lot, actually.</strong> A single hypothesis test at <span class="math inline">\(\alpha = 0.05\)</span> has a 5% chance of a false positive — that’s by design. But each time you peek at the data and run a new test, you’re giving yourself another chance to get a spurious significant result. Over 10 peeks, the probability of at least one false positive is substantially higher than 5%.</p>
 <p>Let’s quantify this with a simulation. We’ll set up a world where the null hypothesis is <strong>true</strong> (<span class="math inline">\(\pi_A = \pi_B = 0.20\)</span>, so <span class="math inline">\(\theta = 0\)</span>) and see how often peeking leads us to incorrectly declare a winner.</p>
-<div id="a8bbfb65" class="cell" data-execution_count="11">
+<div id="c7da4f6a" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>n_experiments <span class="op">=</span> <span class="dv">10000</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>peek_points <span class="op">=</span> np.arange(<span class="dv">100</span>, <span class="dv">1100</span>, <span class="dv">100</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>false_positives <span class="op">=</span> <span class="dv">0</span></span>
@@ -518,7 +518,7 @@ Compare: manual z  = 2.1388, regression t  = 2.1377</code></pre>
 <span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>false_positive_rate <span class="op">=</span> false_positives <span class="op">/</span> n_experiments</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="c4379df9" class="cell" data-execution_count="12">
+<div id="8e207621" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>=== Peeking Simulation Results ===
 Number of simulated experiments:  10,000

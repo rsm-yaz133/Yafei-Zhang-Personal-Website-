@@ -297,7 +297,7 @@ window.Quarto = {
 \theta = \pi_A - \pi_B
 \]</span></p>
 <p>Playing the role of an omniscient simulator, I set <span class="math inline">\(\pi_A = 0.22\)</span> and <span class="math inline">\(\pi_B = 0.18\)</span> — a 4-percentage-point lift for CTA A — then generated 1,000 visitors per group.</p>
-<div id="f2d00008" class="cell" data-execution_count="1">
+<div id="510a8ef2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -334,7 +334,7 @@ Estimated difference: 0.0380  (true value: 0.04000000000000001)</code></pre>
 <h2 class="anchored" data-anchor-id="lesson-1-patience-pays-off-the-law-of-large-numbers">Lesson 1: Patience Pays Off (The Law of Large Numbers)</h2>
 <p>The first thing that struck me was how <em>noisy</em> small samples are. With only a handful of visitors, the estimated difference bounced wildly — sometimes suggesting CTA B was better when we <em>know</em> it isn’t. But as the sample grew, the estimate settled down and converged toward the truth.</p>
 <p>This is the <strong>Law of Large Numbers</strong> in action — and it carries a practical lesson I think about constantly now: <strong>don’t make decisions on small data.</strong> Early results from a campaign or test can be profoundly misleading.</p>
-<div id="26159335" class="cell" data-execution_count="2">
+<div id="3a17b354" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -348,7 +348,7 @@ Estimated difference: 0.0380  (true value: 0.04000000000000001)</code></pre>
 <section id="lesson-2-quantifying-uncertainty-the-bootstrap" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-2-quantifying-uncertainty-the-bootstrap">Lesson 2: Quantifying Uncertainty (The Bootstrap)</h2>
 <p>A point estimate is only half the story. Saying “CTA A is 4 points better” means nothing without knowing how <em>confident</em> we should be. Enter the <strong>bootstrap</strong> — a beautifully simple idea: resample your data with replacement thousands of times and see how much the estimate varies.</p>
-<div id="7ee85dee" class="cell" data-execution_count="3">
+<div id="ad342d8e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n_boot <span class="op">=</span> <span class="dv">1000</span></span>
@@ -367,7 +367,7 @@ Estimated difference: 0.0380  (true value: 0.04000000000000001)</code></pre>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>analytical_se <span class="op">=</span> np.sqrt(p_a <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p_a) <span class="op">/</span> n <span class="op">+</span> p_b <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p_b) <span class="op">/</span> n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="f3aa7821" class="cell" data-execution_count="4">
+<div id="e4acb354" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>Point estimate:    0.0380
 Bootstrap SE:      0.0177
@@ -380,7 +380,7 @@ Analytical SE:     0.0178
 <section id="lesson-3-watching-the-bell-curve-emerge-clt" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-3-watching-the-bell-curve-emerge-clt">Lesson 3: Watching the Bell Curve Emerge (CLT)</h2>
 <p>The <strong>Central Limit Theorem</strong> is one of those results that sounds abstract until you <em>see</em> it. I simulated 1,000 experiments at four different sample sizes and watched the sampling distribution of the estimated effect transform from a jagged, lumpy mess into a smooth bell curve.</p>
-<div id="e12d1aa4" class="cell" data-execution_count="5">
+<div id="289e7b66" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -395,7 +395,7 @@ Analytical SE:     0.0178
 <h2 class="anchored" data-anchor-id="lesson-4-is-the-difference-real-hypothesis-testing">Lesson 4: Is the Difference Real? (Hypothesis Testing)</h2>
 <p>With the CLT backing us up, we can ask the critical question: <strong>is the difference we observed large enough that it’s unlikely to be pure chance?</strong></p>
 <p>We standardize our estimate into a z-statistic and compute a p-value — the probability of seeing a result this extreme if the two CTAs were actually identical.</p>
-<div id="b195b293" class="cell" data-execution_count="6">
+<div id="c1bb7762" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> theta_hat <span class="op">/</span> analytical_se</span>
@@ -413,7 +413,7 @@ z-statistic:       2.1388
 p-value:           0.0325</code></pre>
 </div>
 </div>
-<div id="b6f653d6" class="cell" data-execution_count="7">
+<div id="9fd6907f" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Verdict: We reject the null — there is statistically significant evidence that CTA A outperforms CTA B.</code></pre>
@@ -424,7 +424,7 @@ Verdict: We reject the null — there is statistically significant evidence that
 <section id="lesson-5-the-regression-connection" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-5-the-regression-connection">Lesson 5: The Regression Connection</h2>
 <p>Here’s the insight that tied everything together for me: a two-sample test is <strong>mathematically identical</strong> to a simple linear regression with a binary predictor. The treatment effect <span class="math inline">\(\hat{\theta}\)</span> is just the OLS coefficient <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
-<div id="976f8d0d" class="cell" data-execution_count="8">
+<div id="fe2a9f09" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -436,7 +436,7 @@ Verdict: We reject the null — there is statistically significant evidence that
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(Y, X).fit()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="71cbbce7" class="cell" data-execution_count="9">
+<div id="1735fe35" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>OLS Regression Results
                   Coefficient Estimate Std Error p-value
@@ -451,7 +451,7 @@ Manual estimate: 0.0380  |  Regression β₁: 0.0380</code></pre>
 <section id="the-biggest-lesson-dont-peek" class="level2">
 <h2 class="anchored" data-anchor-id="the-biggest-lesson-dont-peek">The Biggest Lesson: Don’t Peek</h2>
 <p>This was the finding that genuinely surprised me. I simulated a scenario where there is <strong>no real difference</strong> between the CTAs (<span class="math inline">\(\pi_A = \pi_B = 0.20\)</span>), but an impatient manager checks the results every 100 visitors and stops the test as soon as <span class="math inline">\(p &lt; 0.05\)</span>.</p>
-<div id="41d46551" class="cell" data-execution_count="10">
+<div id="af2ac3d5" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n_experiments <span class="op">=</span> <span class="dv">10000</span></span>
@@ -482,7 +482,7 @@ Manual estimate: 0.0380  |  Regression β₁: 0.0380</code></pre>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>false_positive_rate <span class="op">=</span> false_positives <span class="op">/</span> n_experiments</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="abb315cc" class="cell" data-execution_count="11">
+<div id="cdb1a8b4" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>Experiments simulated:    10,000
 False positive rate:      19.9%

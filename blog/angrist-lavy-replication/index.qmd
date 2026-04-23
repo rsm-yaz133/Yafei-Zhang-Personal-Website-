@@ -1,0 +1,273 @@
+---
+title: "Does class size actually matter? Replicating Angrist & Lavy (1999)"
+description: "I replicated a 1999 study that used a medieval rabbinical rule to estimate the causal effect of class size on test scores, and the results surprised me."
+author: "Yafei (Judie) Zhang"
+date: 2025-04-21
+categories: [Causal Inference, Education, Replication, Econometrics]
+image: "maimonides_plot.png"
+format:
+  html:
+    code-fold: true
+    toc: true
+---
+
+## The problem with "just comparing" class sizes
+
+Does reducing class size improve student achievement? It sounds like an easy question. Get data on class sizes and test scores, run a regression, done. Right?
+
+Not really. The issue is that class size isn't random. Wealthier districts hire more teachers. Engaged parents lobby for smaller classes. Struggling schools sometimes get extra funding that shrinks their classes too. So when you compare test scores across different class sizes, you're also comparing all these other things at the same time. The estimate is biased, and you can't tell how much.
+
+Angrist and Lavy (1999) found a way around this using something I genuinely didn't expect: a rule from a 12th-century rabbi. In Israel, Maimonides' Rule caps class sizes at 40 students. When a school's enrollment crosses a multiple of 40, it *must* split into an additional class. A school with 40 kids has one class of 40. A school with 41 kids suddenly has two classes of about 20.
+
+That jump has nothing to do with how good the school is or how wealthy the families are. It's just arithmetic. And that makes it useful as an instrumental variable, because it gives us variation in class size that's driven entirely by an administrative cutoff, not by the usual confounders.
+
+The authors use this to estimate the causal effect of class size on reading and math scores for 4th and 5th graders in Israeli public schools. I replicated their analysis in R.
+
+
+## Setting up the replication
+
+The data are class-level observations for 4th and 5th graders in Israeli public schools. I followed the original Stata replication code for the cleaning steps: fixing score values above 100, constructing the Maimonides' Rule prediction (enrollment divided by the number of classes the rule requires), and applying the same sample restrictions.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(haven)
+library(fixest)
+library(estimatr)
+library(modelsummary)
+library(kableExtra)
+```
+
+```{r}
+#| label: data-cleaning
+
+clean_data <- function(filepath) {
+  df <- read_dta(filepath, encoding = "latin1")
+
+  # Fix scores > 100 (same as Stata: replace avg = avg - 100 if avg > 100)
+  df$avgverb[df$avgverb > 100 & !is.na(df$avgverb)] <-
+    df$avgverb[df$avgverb > 100 & !is.na(df$avgverb)] - 100
+  df$avgmath[df$avgmath > 100 & !is.na(df$avgmath)] <-
+    df$avgmath[df$avgmath > 100 & !is.na(df$avgmath)] - 100
+
+  # Maimonides' Rule: predicted class size
+  df$func1 <- df$c_size / (floor((df$c_size - 1) / 40) + 1)
+  df$func2 <- df$cohsize / (floor(df$cohsize / 40) + 1)
+
+  # Set scores to NA if test sample size is 0
+  df$avgverb[df$verbsize == 0] <- NA
+  df$passverb[df$verbsize == 0] <- NA
+  df$avgmath[df$mathsize == 0] <- NA
+  df$passmath[df$mathsize == 0] <- NA
+
+  # Sample restrictions (same as Stata)
+  df <- df[df$classize > 1 & df$classize < 45 & df$c_size > 5, ]
+  df <- df[df$c_leom == 1 & df$c_pik < 3, ]
+
+  return(df)
+}
+
+grade5 <- clean_data("../../dataverse_files/final5.dta")
+grade4 <- clean_data("../../dataverse_files/final4.dta")
+
+cat("5th graders: n =", nrow(grade5), "\n")
+cat("4th graders: n =", nrow(grade4), "\n")
+```
+
+A quick note on what to expect: point estimates should match the published tables closely, but standard errors may not be exact. Angrist and Lavy use Moulton-corrected standard errors clustered by school, while I'm using `fixest`'s cluster-robust standard errors, which handle the clustering slightly differently. This is a known issue in replications of this paper and doesn't affect the substantive conclusions.
+
+
+## The replication: OLS vs. instrumental variables
+
+The main analysis in the paper is a two-stage least squares (2SLS) estimation. The logic goes like this:
+
+- First stage: use Maimonides' Rule to *predict* class size. Schools just above an enrollment cutoff (41, 81, 121) are predicted to have smaller classes than schools just below.
+- Second stage: use those predicted class sizes, which are driven by the rule and not by school characteristics, to estimate the effect on test scores.
+
+But before getting to the IV results, it's worth seeing what plain OLS gives us, because the contrast is the whole point.
+
+### Table II: OLS estimates (the wrong answer)
+
+These regressions just relate test scores to actual class size, adding controls progressively.
+
+```{r}
+#| label: table-2
+
+# --- 5th Grade ---
+t2_5v1 <- feols(avgverb ~ classize, data = grade5, cluster = ~schlcode)
+t2_5v2 <- feols(avgverb ~ classize + tipuach, data = grade5, cluster = ~schlcode)
+t2_5v3 <- feols(avgverb ~ classize + tipuach + c_size, data = grade5, cluster = ~schlcode)
+
+t2_5m1 <- feols(avgmath ~ classize, data = grade5, cluster = ~schlcode)
+t2_5m2 <- feols(avgmath ~ classize + tipuach, data = grade5, cluster = ~schlcode)
+t2_5m3 <- feols(avgmath ~ classize + tipuach + c_size, data = grade5, cluster = ~schlcode)
+
+# --- 4th Grade ---
+t2_4v1 <- feols(avgverb ~ classize, data = grade4, cluster = ~schlcode)
+t2_4v2 <- feols(avgverb ~ classize + tipuach, data = grade4, cluster = ~schlcode)
+t2_4v3 <- feols(avgverb ~ classize + tipuach + c_size, data = grade4, cluster = ~schlcode)
+
+t2_4m1 <- feols(avgmath ~ classize, data = grade4, cluster = ~schlcode)
+t2_4m2 <- feols(avgmath ~ classize + tipuach, data = grade4, cluster = ~schlcode)
+t2_4m3 <- feols(avgmath ~ classize + tipuach + c_size, data = grade4, cluster = ~schlcode)
+```
+
+#### Panel A: 5th grade
+
+```{r}
+#| label: table-2-panel-a
+
+modelsummary(
+  list("Reading (1)" = t2_5v1, "Reading (2)" = t2_5v2, "Reading (3)" = t2_5v3,
+       "Math (4)" = t2_5m1, "Math (5)" = t2_5m2, "Math (6)" = t2_5m3),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("classize" = "Class size", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table II, Panel A: 5th Grade OLS Estimates"
+)
+```
+
+#### Panel B: 4th grade
+
+```{r}
+#| label: table-2-panel-b
+
+modelsummary(
+  list("Reading (7)" = t2_4v1, "Reading (8)" = t2_4v2, "Reading (9)" = t2_4v3,
+       "Math (10)" = t2_4m1, "Math (11)" = t2_4m2, "Math (12)" = t2_4m3),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("classize" = "Class size", "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table II, Panel B: 4th Grade OLS Estimates"
+)
+```
+
+Look at the OLS coefficient on class size. In several specifications it's *positive* or insignificant, suggesting bigger classes go with *higher* scores. That doesn't make sense on its face. But it does make sense if you think about where big classes come from: larger schools in more urban, better-resourced areas. OLS is picking up the school's environment, not the class size effect.
+
+
+### Table IV: 2SLS results (5th grade)
+
+This is the table I was most interested in replicating. I instrument actual class size with the rule's prediction and estimate specifications with progressively richer controls: percent disadvantaged, enrollment, enrollment squared, and a piecewise-linear enrollment trend. I also restrict to a "discontinuity sample" of schools with enrollment near the cutoffs (36-45, 76-85, 116-125), where the jump in predicted class size is sharpest.
+
+```{r}
+#| label: table-4-setup
+
+# Create discontinuity sample indicator
+grade5$disc <- with(grade5,
+  (c_size >= 36 & c_size <= 45) | (c_size >= 76 & c_size <= 85) |
+  (c_size >= 116 & c_size <= 125))
+
+grade4$disc <- with(grade4,
+  (c_size >= 36 & c_size <= 45) | (c_size >= 76 & c_size <= 85) |
+  (c_size >= 116 & c_size <= 125))
+
+g5 <- grade5[!is.na(grade5$avgverb), ]
+g4 <- grade4[!is.na(grade4$avgverb), ]
+
+# Additional variables
+g5$c_size2 <- (g5$c_size^2) / 100
+
+# Piecewise linear trend (as in Stata code)
+g5$trend <- NA
+g5$trend[g5$c_size >= 0 & g5$c_size <= 40]   <- g5$c_size[g5$c_size >= 0 & g5$c_size <= 40]
+g5$trend[g5$c_size >= 41 & g5$c_size <= 80]   <- 20 + g5$c_size[g5$c_size >= 41 & g5$c_size <= 80] / 2
+g5$trend[g5$c_size >= 81 & g5$c_size <= 120]  <- 100/3 + g5$c_size[g5$c_size >= 81 & g5$c_size <= 120] / 3
+g5$trend[g5$c_size >= 121 & g5$c_size <= 160] <- 130/3 + g5$c_size[g5$c_size >= 121 & g5$c_size <= 160] / 4
+
+run_2sls <- function(df, dvar) {
+  m1 <- feols(as.formula(paste(dvar, "~ tipuach | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+  m2 <- feols(as.formula(paste(dvar, "~ tipuach + c_size | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+  m3 <- feols(as.formula(paste(dvar, "~ tipuach + c_size + c_size2 | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+  m4 <- feols(as.formula(paste(dvar, "~ trend | classize ~ func1")),
+              data = df, cluster = ~schlcode)
+
+  disc_df <- df[df$disc == TRUE, ]
+  m5 <- feols(as.formula(paste(dvar, "~ tipuach | classize ~ func1")),
+              data = disc_df, cluster = ~schlcode)
+  m6 <- feols(as.formula(paste(dvar, "~ tipuach + c_size | classize ~ func1")),
+              data = disc_df, cluster = ~schlcode)
+
+  list(full1 = m1, full2 = m2, full3 = m3, full4 = m4, disc1 = m5, disc2 = m6)
+}
+
+t4_verb <- run_2sls(g5, "avgverb")
+t4_math <- run_2sls(g5, "avgmath")
+```
+
+#### Reading scores
+
+```{r}
+#| label: table-4-reading
+
+modelsummary(
+  list("Full (1)" = t4_verb$full1, "Full (2)" = t4_verb$full2,
+       "Full (3)" = t4_verb$full3, "Full (4)" = t4_verb$full4,
+       "Disc (5)" = t4_verb$disc1, "Disc (6)" = t4_verb$disc2),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("fit_classize" = "Class size (instrumented)",
+               "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment", "c_size2" = "Enrollment sq/100",
+               "trend" = "Piecewise trend"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table IV: 2SLS Estimates, 5th Grade Reading Scores"
+)
+```
+
+#### Math scores
+
+```{r}
+#| label: table-4-math
+
+modelsummary(
+  list("Full (1)" = t4_math$full1, "Full (2)" = t4_math$full2,
+       "Full (3)" = t4_math$full3, "Full (4)" = t4_math$full4,
+       "Disc (5)" = t4_math$disc1, "Disc (6)" = t4_math$disc2),
+  stars = c('*' = 0.1, '**' = 0.05, '***' = 0.01),
+  coef_map = c("fit_classize" = "Class size (instrumented)",
+               "tipuach" = "Percent disadvantaged",
+               "c_size" = "Enrollment", "c_size2" = "Enrollment sq/100",
+               "trend" = "Piecewise trend"),
+  gof_map = c("nobs", "r.squared"),
+  title = "Table IV: 2SLS Estimates, 5th Grade Math Scores"
+)
+```
+
+Compare these to the OLS table above. The sign on class size flips. Once we isolate the variation that comes from the administrative cutoff, the estimated effect is *negative and significant*: smaller classes improve scores. OLS had it backwards because of all the confounding I mentioned earlier. Seeing both tables side by side made the case for IV estimation click for me in a way that reading about it in a textbook never quite did.
+
+
+## Something extra: seeing the first stage
+
+I wanted to go beyond the tables and actually *see* why this instrument works. So I plotted actual class size against predicted class size (from Maimonides' Rule) across different enrollment counts.
+
+```{r}
+#| label: maimonides-plot
+#| fig-cap: "Actual vs. predicted class size from Maimonides' Rule (5th graders). The sawtooth pattern in the red line shows the sharp discontinuities at enrollment multiples of 40."
+#| fig-width: 8
+#| fig-height: 5
+
+# Collapse to enrollment-level means
+agg5 <- aggregate(cbind(classize, func1) ~ c_size, data = g5, FUN = mean)
+
+plot(agg5$c_size, agg5$classize,
+     pch = 16, cex = 0.6, col = "steelblue",
+     xlab = "Enrollment count", ylab = "Class size",
+     main = "Actual vs. Predicted Class Size (5th Grade)",
+     ylim = c(10, 45))
+lines(agg5$c_size[order(agg5$c_size)], agg5$func1[order(agg5$c_size)],
+      col = "firebrick", lwd = 2)
+abline(v = c(40, 80, 120), lty = 2, col = "gray60")
+legend("topright", legend = c("Actual class size (mean)", "Maimonides' Rule prediction"),
+       pch = c(16, NA), lty = c(NA, 1), lwd = c(NA, 2),
+       col = c("steelblue", "firebrick"), bty = "n")
+```
+
+The sawtooth shape in the red line is the whole story. At enrollment counts just above 40, 80, and 120, predicted class size drops sharply because the school has to add another class. The blue dots (actual class sizes) follow this prediction loosely, with a lot of scatter. That scatter is fine. It means the first stage is strong enough to predict class size, and there's real variation for the second stage to work with.
+
+I think this is my favorite part of the paper. You can stare at regression tables all day, but seeing the jumps in the plot makes it obvious *why* the instrument works. The rule doesn't care about school quality or family income. It just counts kids and divides by 40. And that mechanical, almost boring feature is exactly what gives the study its credibility.
