@@ -104,6 +104,7 @@ plt.show()
 
 The pattern is exactly what the LLN predicts.  With only a handful of observations the running average bounces wildly — it could be positive, negative, or anywhere in between.  But as the sample size grows, the noise diminishes and the estimate settles down near the true value of 0.04.  This is the fundamental reason statistics works: **more data means more precision**.
 
+Early fluctuations are large because each additional observation has a strong influence when the sample is still small. As the sample grows, each new observation has less impact, and the estimate stabilizes near the true effect.
 
 ## Bootstrap Standard Errors
 
@@ -162,6 +163,7 @@ The two standard errors are very close, which is reassuring — the bootstrap is
 
 Using the bootstrap SE, our 95% confidence interval for $\theta$ is $\hat\theta \pm 1.96 \times SE$.  If this interval excludes zero, we have evidence that the CTAs differ in effectiveness.  If it includes zero, we can't rule out that the difference is due to chance.
 
+Because zero would represent no difference between the two CTAs, checking whether the interval crosses zero gives us a quick way to assess whether the observed effect is distinguishable from random noise.
 
 ## The Central Limit Theorem
 
